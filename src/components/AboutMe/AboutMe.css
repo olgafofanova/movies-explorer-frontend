@@ -107,10 +107,6 @@
 
 @media screen and (max-width: 720px) {
 
-  .about-me {
-    padding: 70px 30px 40px;
-  }
-
   .about-me__container {
     display: block;
     padding-top: 60px;  

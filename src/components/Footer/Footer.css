@@ -1,6 +1,12 @@
 .footer {
   max-width: 1280px;
-  padding: 0 70px;
+  padding: 79px 70px 20px;
+  position: relative;
+  max-width: 1280px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  width: 100%;
+
 }
 
 .footer__copy {
@@ -19,7 +25,7 @@
   line-height: 16px;
   text-align: center;
   color: #A0A0A0;
-  padding: 79px 0 20px;
+  padding: 0 0 20px;
   border-bottom: 1px solid #E8E8E8;
   margin: 0;
 }
@@ -53,7 +59,7 @@
 
 @media screen and (max-width: 768px) {
   .footer {
-    padding: 0 30px;
+    padding: 79px 30px 20px;
   }
 }
 
@@ -62,10 +68,15 @@
     padding: 0 10px;
   }
 
+  .footer__text {
+    font-size: 12px;
+    line-height: 15px;   
+  }
+
   .footer__nav{
     flex-direction: column;
     align-items:center;
-    padding: 20px 0 10px;
+    padding: 18px 0 10px;
   }
 
   .footer__copy {

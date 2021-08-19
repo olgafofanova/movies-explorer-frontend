@@ -4,7 +4,7 @@
 
 .promo__container {
   max-width: 1280px;
-  height: 90vh;
+  min-height: 90vh;
   min-height: 634px;
   background-image: url(../../images/landing-logo.svg);
   background-position: right bottom;
