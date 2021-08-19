@@ -1,0 +1,39 @@
+.button-profile{
+    text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+    .button-profile {
+       display: none;
+    }
+  }
+
+.button-profile__container{
+    background: #FFFFFF;
+box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+border-radius: 40px;
+height: 32px;
+display: flex;
+align-items:center;
+padding-left: 11px;
+}
+
+.button-profile__title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 12px;  
+    color: #222222;
+    text-decoration: none;
+    padding: 0 4px 0 0;
+    margin: 0;
+}
+
+.button-profile__img {
+width: 26px;
+height: 26px;
+background: #F5F5F5;
+border-radius: 50px;
+object-fit: scale-down;
+margin: 3px;
+}

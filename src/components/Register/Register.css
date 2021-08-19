@@ -1,0 +1,144 @@
+.register {
+  width: 100%;
+  position: relative;
+  margin: 0;
+  padding: 70px 0;
+  height: 100vh;
+  box-sizing:border-box;
+  }
+   
+.register__conteiner {
+  max-width: 396px;
+  min-width: 260px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 auto;
+  height: 100%;
+  box-sizing:border-box;
+}
+  
+.register__header {
+  align-self: center;
+  margin-top:40px;
+  margin-bottom:40px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+  
+.register__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-width: 260px;
+}
+  
+.register__fieldset {
+  width: 100%;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+  
+.register__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #A0A0A0;
+  padding-top: 10px;
+}
+    
+.register__input {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #000000;
+  background: #F9F9F9;
+  border-radius: 8px;
+  height: 46px;
+  border: 0;
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 15px;
+  position: relative;
+  outline: none;
+}
+   
+.register__button-submit {
+  background: #3456F3;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  width: 100%;
+  height: 45px;
+  border: 0;
+  margin: 69px 0 0;
+}
+    
+.register__button-submit:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+  
+.register__link{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  color: #A0A0A0;
+  padding-top: 16px;
+}
+  
+.register__link-accent{
+  color: #3456F3;
+}
+
+.register__input-error {
+  color: #FF3055;
+  padding-top: 10px;
+}
+
+@media screen and (max-width: 425px) {
+  .register {
+    padding: 56px 0 30px;
+  }
+
+   .register__conteiner {
+    align-items:center;
+  }
+
+  .register__header {
+    margin-top:50px;
+    margin-bottom:80px;
+  }
+
+  .register__button-submit {
+    font-size: 12px;
+    line-height: 15px;
+  }
+    
+  .register__link{
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+  

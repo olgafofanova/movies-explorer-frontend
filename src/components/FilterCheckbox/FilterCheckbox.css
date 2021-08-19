@@ -1,0 +1,30 @@
+.filter-checkbox{
+    display: flex;
+    justify-content: left;
+    align-items:center,
+}
+.filter-checkbox__title{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 18px;   
+    color: #000000;
+    padding:0 14px 0 41px ;
+    margin: 0;
+}
+
+.filter-checkbox__switch{
+    background: #2BE080;
+    border-radius: 20px;
+    width: 36px;
+    height: 20px;
+    padding: 2px 2px 2px 18px;
+    box-sizing: border-box;
+}
+
+.filter-checkbox__circle{
+    background: #FFFFFF;
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+}
