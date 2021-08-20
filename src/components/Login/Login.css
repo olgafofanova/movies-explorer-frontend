@@ -63,18 +63,17 @@
 .login__input {
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 17px;
   color: #000000;
-  background: #F9F9F9;
-  border-radius: 8px;
-  height: 46px;
+  height: 30px;
   border: 0;
   box-sizing: border-box;
-  margin-top: 10px;
+  margin-top: 2px;
   padding: 15px;
   position: relative;
   outline: none;
+  border-bottom: 1px solid #E8E8E8;
 }
 
 .login__button-submit {
@@ -109,6 +108,7 @@
 }
 
 .login__link-accent{
+  padding-left: 6px;
   color: #3456F3;
 }
 

@@ -8,10 +8,10 @@ import Footer from '../Footer/Footer';
 function SavedMovies() {
     return ( 
         <>
-        <Header />
-        <SearchForm />
-        <MoviesCardList />
-        <Footer />
+          <Header />
+          <SearchForm />
+          <MoviesCardList />
+          <Footer />
        </> 
     );
 }

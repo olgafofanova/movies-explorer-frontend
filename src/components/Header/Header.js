@@ -8,12 +8,12 @@ import Logo from '../Logo/Logo';
 function Header() {
     return ( 
         <div className="header">
-        <Logo />
-        <div  className="header__nav">
+          <Logo />
+          <div  className="header__nav">
             <NavTab />
             <ButtonProfile />
             <ButtonCollMemu />
-        </div> 
+          </div> 
         </div> 
     );
 }

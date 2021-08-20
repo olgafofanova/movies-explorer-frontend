@@ -1,7 +1,6 @@
 
 import React from 'react';
 import './ButtonCollMemu.css';
-import icon from '../../images/icon-profile.png';
 
 function ButtonCollMemu() {
     return ( 

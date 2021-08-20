@@ -8,36 +8,23 @@
     padding: 70px 70px 10px;
     box-sizing: border-box;
     display: grid; 
-    grid-template-columns: repeat(4,1fr);
-    grid-column-gap: 20px;
-    -webkit-column-gap: 20px;
-    column-gap: 20px;
-    grid-row-gap: 20px;
-    row-gap: 38px;
+    grid-template-columns: repeat(1,1fr);
+    grid-row-gap: 40px;
+    row-gap: 40px;
   }
-
-@media screen and (max-width: 1110px) {
-    .movies-cardlist_card-container {
-        grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  
+ 
 @media screen and (max-width: 768px) {
     .movies-cardlist_card-container {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 70px 30px 10px;
-        grid-column-gap: 30px;
-        -webkit-column-gap: 30px;
-        column-gap: 30px;
-        grid-row-gap: 12px;
-        row-gap: 30px;
+
+        padding: 60px 30px 10px;
+
     }
   }
   
 @media screen and (max-width: 425px) {
     .movies-cardlist_card-container {
-        grid-template-columns: repeat(1, 1fr);
-        row-gap: 34px;
+      grid-row-gap: 20px;
+      row-gap: 20px;
         padding: 40px 10px 10px;
     }
   }

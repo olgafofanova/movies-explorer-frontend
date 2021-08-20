@@ -21,7 +21,7 @@ function Login() {
             className="login__input login__input_type_username" 
             id="login-username" 
             name="email" 
-            placeholder=""  
+            placeholder="pochta"  
             required 
             minLength="2" 
             maxLength="40" 

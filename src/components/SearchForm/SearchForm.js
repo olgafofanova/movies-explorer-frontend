@@ -10,7 +10,7 @@ function SearchForm() {
         <div className="search-form__container">       
         <div className="search-form__find">
           <p className="search-form__title">фильм</p>
-          <img  className="search-form__img" src={icon}  alt="Поиск"/>
+          <button type="submit" className="search-form__button-find">Найти</button>  
         </div> 
         <FilterCheckbox />
         </div>

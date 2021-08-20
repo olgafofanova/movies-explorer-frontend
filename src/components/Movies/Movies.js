@@ -8,13 +8,13 @@ import Preloader from '../Preloader/Preloader';
 
 function Movies() {
     return ( 
-        <>
-         <Header />
-         <SearchForm />
-<Preloader />
-         <MoviesCardList />
-         <Footer />
-        </>        
+      <>
+        <Header />
+        <SearchForm />
+        <Preloader />
+        <MoviesCardList />
+        <Footer />
+      </>        
     );
 }
 

@@ -15,6 +15,9 @@
   width: 100%;
   height: 36px;
   border: 0;
+  max-width: 320px;
+  margin: 0 auto;
+  display: block;
 }
 
 .more__button:hover {
@@ -23,12 +26,7 @@
 
 @media screen and (max-width: 768px) {
   .more {
-    padding: 50px 30px 80px;
+    padding: 50px 40px 80px;
   }
 }
 
-@media screen and (max-width: 425px) {
-  .more {
-    padding: 50px 10px 80px;
-  }
-}
