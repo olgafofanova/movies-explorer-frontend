@@ -17,37 +17,34 @@ function App() {
 
   return (
     <div className="body">
-    <div className="page">
-    
-    {loggedIn ? <Header />:null}
-    <Switch>
-                <Route path="/signup">
-                  <Register />
-                </Route>
-                <Route path="/signin">
-                  <Login />
-                </Route>
-                <Route path="/profile">
-                  <Profile />
-                </Route>
-                <Route path="/movies">
-                  <Movies />
-                </Route>
-                <Route path="/saved-movies">
-                  <SavedMovies />
-                </Route>                
-                <Route exact path="/">
-                  <Main />
-                </Route>
-                <Route path="*">
-                  <PageNotFound />
-                </Route>
-            </Switch>
-    {loggedIn ? <Footer />:null}
-    
+      <div className="page">
+        {loggedIn ? <Header />:null}
+        <Switch>
+          <Route path="/signup">
+            <Register />
+          </Route>
+        <Route path="/signin">
+          <Login />
+        </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
+        <Route path="/movies">
+          <Movies />
+        </Route>
+        <Route path="/saved-movies">
+          <SavedMovies />
+        </Route>                
+        <Route exact path="/">
+          <Main />
+        </Route>
+        <Route path="*">
+          <PageNotFound />
+        </Route>
+      </Switch>
+      {loggedIn ? <Footer />:null}    
     </div> 
-</div>
-
+  </div>
   );
 }
 

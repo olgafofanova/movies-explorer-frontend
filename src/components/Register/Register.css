@@ -7,7 +7,7 @@
   box-sizing:border-box;
   }
    
-.register__conteiner {
+.register__container {
   max-width: 396px;
   min-width: 260px;
   width: 100%;
@@ -63,20 +63,23 @@
 .register__input {
   font-style: normal;
   font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 17px;
   color: #000000;
-  background: #F9F9F9;
-  border-radius: 8px;
-  height: 46px;
+  height: 30px;
   border: 0;
   box-sizing: border-box;
-  margin-top: 10px;
+  margin-top: 2px;
   padding: 15px;
   position: relative;
   outline: none;
+  border-bottom: 1px solid #E8E8E8;
 }
-   
+ 
+.profile__input:focus {
+  border-bottom: 1px solid #3456F3;
+}
+
 .register__button-submit {
   background: #3456F3;
   border-radius: 3px;
@@ -109,6 +112,7 @@
 }
   
 .register__link-accent{
+  padding-left: 6px;
   color: #3456F3;
 }
 
@@ -122,7 +126,7 @@
     padding: 56px 0 30px;
   }
 
-   .register__conteiner {
+   .register__container {
     align-items:center;
   }
 

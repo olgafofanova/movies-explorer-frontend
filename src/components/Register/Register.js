@@ -6,7 +6,7 @@ import Logo from '../Logo/Logo';
 function Register() {
     return(
         <div className="register">
-          <div className="register__conteiner">
+          <div className="register__container">
             <Logo />
           <h2 className="register__header">
               Добро пожаловать!
@@ -63,6 +63,7 @@ function Register() {
             </span> 
           </div>
         </div>
-      )
-      }
+    )
+}
+
 export default Register;

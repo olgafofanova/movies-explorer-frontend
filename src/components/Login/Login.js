@@ -7,7 +7,7 @@ import Logo from '../Logo/Logo';
 function Login() {
   return(
     <div className="login">
-      <div className="login__conteiner">
+      <div className="login__container">
         <Logo />
       <h2 className="login__header">
           Рады видеть!
@@ -21,7 +21,7 @@ function Login() {
             className="login__input login__input_type_username" 
             id="login-username" 
             name="email" 
-            placeholder="pochta"  
+            placeholder=""  
             required 
             minLength="2" 
             maxLength="40" 
