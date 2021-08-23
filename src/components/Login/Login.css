@@ -1,0 +1,147 @@
+.login {
+  width: 100%;
+  position: relative;
+  margin: 0;
+  padding: 70px 0;
+  height: 100vh;
+  box-sizing:border-box;
+}
+
+.login__container {
+  max-width: 396px;
+  min-width: 260px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 auto;
+  height: 100%;
+  box-sizing:border-box;
+}
+
+.login__header {
+  align-self: center;
+  margin-top:40px;
+  margin-bottom:40px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-width: 260px;
+}
+
+.login__fieldset {
+  width: 100%;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.login__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #A0A0A0;
+  padding-top: 10px;
+}
+  
+.login__input {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  height: 30px;
+  border: 0;
+  box-sizing: border-box;
+  margin-top: 2px;
+  padding: 15px;
+  position: relative;
+  outline: none;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.profile__input:focus {
+  border-bottom: 1px solid #3456F3;
+}
+
+.login__button-submit {
+  background: #3456F3;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  width: 100%;
+  height: 45px;
+  border: 0;
+  margin: 69px 0 0;
+  }
+  
+.login__button-submit:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+  
+.login__link{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  color: #A0A0A0;
+  padding-top: 16px;
+}
+
+.login__link-accent{
+  padding-left: 6px;
+  color: #3456F3;
+}
+
+.login__input-error {
+  color: #FF3055;
+  padding-top: 10px;
+}
+
+@media screen and (max-width: 425px) {
+  .login {
+    padding: 56px 0 30px;
+  }
+
+   .login__container {
+    align-items:center;
+  }
+
+  .login__header {
+    margin-top:50px;
+    margin-bottom:80px;
+  }
+
+  .login__button-submit {
+    font-size: 12px;
+    line-height: 15px;
+  }
+    
+  .login__link{
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
