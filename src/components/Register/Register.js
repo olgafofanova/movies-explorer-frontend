@@ -1,9 +1,30 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import './Register.css';
 import Logo from '../Logo/Logo';
 
-function Register() {
+function Register({ onRegister }) {
+
+  const [registerData, setRegisterData] = useState({
+    name:'',
+    email: '',
+    password: '',
+  });
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterData({
+      ...registerData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onRegister(registerData);
+  };
+
     return(
         <div className="register">
           <div className="register__container">
@@ -11,7 +32,7 @@ function Register() {
           <h2 className="register__header">
               Добро пожаловать!
           </h2>
-          <form className="register__form">
+          <form className="register__form" onSubmit={handleSubmit}>
             <fieldset className="register__fieldset"> 
             <label className = "register__field">
                 Имя
@@ -19,11 +40,13 @@ function Register() {
                 type="text"       
                 className="register__input register__input_type_username" 
                 id="register-username" 
-                name="username" 
+                name="name" 
                 placeholder=""  
                 required 
                 minLength="2" 
                 maxLength="40" 
+                onChange={handleChange} 
+                value={registerData.name || ''} 
                 />
                 <span className="register__input-error register-username-error"> </span> 
               </label>          
@@ -38,6 +61,8 @@ function Register() {
                 required 
                 minLength="2" 
                 maxLength="40" 
+                onChange={handleChange} 
+                value={registerData.email || ''} 
                 />
                 <span className="register__input-error register-email-error"> </span> 
               </label> 
@@ -52,6 +77,8 @@ function Register() {
                 required 
                 minLength="2" 
                 maxLength="200" 
+                onChange={handleChange} 
+                value={registerData.password || ''} 
                 />
                 <span className="register__input-error register-password-error"> </span> 
               </label> 
