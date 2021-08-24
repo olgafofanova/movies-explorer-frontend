@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Route, Switch, Redirect, withRouter, useHistory } from 'react-router-dom';
 
 import './App.css';
@@ -11,16 +11,44 @@ import Profile from '../Profile/Profile';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import PageNotFound from '../PageNotFound/PageNotFound';
-//import * as auth from '../../utils/auth.js';
-
 import * as auth from '../../utils/auth';
+import moviesApi from '../../utils/moviesApi';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
   const [isSuccessRegisration, setIsSuccessRegisration] = useState(false);
+  const [cards, setCards] = useState([]);
 
   const history = useHistory();
+
+  useEffect(() => {
+   // if (loggedIn) {
+        // первоначальная загрузка данных профиля
+        // api.getUser()
+        // .then(res => {
+        //     setCurrentUser(res);
+        // })
+        // .catch(err => {
+        //     console.log('Ошибка при получении данных', err);
+        // });
+
+    // первоначальная загрузка карточек
+    moviesApi.getCards()
+        .then(res => {
+            setCards(res);
+            console.log(res)
+        })
+        .catch(err => {
+            console.log('Ошибка при получении данных', err);
+        });
+
+     // history.push('/main');
+   // }
+  },[]);
+// }, [loggedIn]);
+
+  // setLoggedIn(true);
 
     //Регистрация
     const onRegister = (data) => {
@@ -41,6 +69,7 @@ function App() {
     <div className="body">
       <div className="page">
         {loggedIn ? <Header />:null}
+        <Header />
         <Switch>
           <Route path="/signup">
             <Register onRegister={onRegister} />

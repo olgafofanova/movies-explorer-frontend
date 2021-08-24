@@ -1,7 +1,7 @@
 export const config = {
-    baseUrlMain: 'https://api.diplom.fofanaya.nomoredomains.club',
-    baseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
+    baseUrlMain: 'http://api.diplom.fofanaya.nomoredomains.club',
+    baseUrlMovies: 'https://api.nomoreparties.co/beatfilm-movies',
      headers: {
-         'Content-Type': 'application/json',
+         'Content-Type': 'application/json; charset=utf-8',
      },  
  };

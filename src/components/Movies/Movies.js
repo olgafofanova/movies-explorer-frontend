@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -8,14 +8,30 @@ import Preloader from '../Preloader/Preloader';
 import PopupMenu from '../PopupMenu/PopupMenu';
 
 function Movies() {
+
+  const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
+
+  function handleCollMenuClick(event) {
+    setIsPopupMenuOpen(true);
+    console.log(isPopupMenuOpen);
+};
+
+function closePopupMenu() {
+  setIsPopupMenuOpen(false);
+};
+
     return ( 
       <>
-        <Header />
+        <Header onCollMenuClick={handleCollMenuClick}/>
         <SearchForm />
         <Preloader />
         <MoviesCardList />
         <Footer />
-        <PopupMenu />
+        <PopupMenu 
+                        isOpen={isPopupMenuOpen} 
+                        onClose={closePopupMenu} 
+                        itemAccent='movies'
+                    /> 
       </>        
     );
 }

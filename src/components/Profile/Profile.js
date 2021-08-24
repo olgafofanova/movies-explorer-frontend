@@ -1,12 +1,25 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import './Profile.css';
 import Header from '../Header/Header';
+import PopupMenu from '../PopupMenu/PopupMenu';
 
 function Profile() {
+
+  const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
+
+  function handleCollMenuClick(event) {
+    setIsPopupMenuOpen(true);
+    console.log(isPopupMenuOpen);
+};
+
+function closePopupMenu() {
+  setIsPopupMenuOpen(false);
+};
+
     return ( 
         <>
-          <Header />
+          <Header  onCollMenuClick={handleCollMenuClick}/>
           <div className="profile">
             <div className="profile__container">
               <h2 className="profile__header">
@@ -67,6 +80,11 @@ function Profile() {
               <Link to="/" className="profile__link">Выйти из аккаунта</Link>
             </div>    
           </div>
+          <PopupMenu 
+                        isOpen={isPopupMenuOpen} 
+                        onClose={closePopupMenu} 
+                        itemAccent='profile'
+                    /> 
         </>        
     );
 }

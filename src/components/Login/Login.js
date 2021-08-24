@@ -1,10 +1,30 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import './Login.css';
 
 import Logo from '../Logo/Logo';
 
-function Login() {
+function Login({ onLogin }) {
+
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData({
+      ...loginData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onLogin(loginData);
+  };
+
+
   return(
     <div className="login">
       <div className="login__container">
@@ -12,7 +32,7 @@ function Login() {
       <h2 className="login__header">
           Рады видеть!
       </h2>
-      <form className="login__form">
+      <form className="login__form"  onSubmit={handleSubmit}>
         <fieldset className="login__fieldset">          
           <label className = "login__field">
             E-mail
@@ -25,6 +45,8 @@ function Login() {
             required 
             minLength="2" 
             maxLength="40" 
+            onChange={handleChange} 
+            value={loginData.email || ''} 
             />
             <span className="login__input-error login-username-error"> </span> 
           </label> 
@@ -39,6 +61,8 @@ function Login() {
             required 
             minLength="2" 
             maxLength="200" 
+            onChange={handleChange} 
+            value={loginData.password || ''} 
             />
             <span className="login__input-error login-password-error"></span> 
           </label> 

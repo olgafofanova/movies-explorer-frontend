@@ -5,14 +5,14 @@ import ButtonProfile from '../ButtonProfile/ButtonProfile';
 import ButtonCollMemu from '../ButtonCollMemu/ButtonCollMemu';
 import Logo from '../Logo/Logo';
 
-function Header() {
+function Header({onCollMenuClick}) {
     return ( 
         <div className="header">
           <Logo />
           <div  className="header__nav">
             <NavTab />
             <ButtonProfile />
-            <ButtonCollMemu />
+            <ButtonCollMemu onCollMenuClick={onCollMenuClick}/>
           </div> 
         </div> 
     );

@@ -11,7 +11,6 @@ function Register({ onRegister }) {
     password: '',
   });
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRegisterData({
