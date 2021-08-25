@@ -7,7 +7,7 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 import PopupMenu from '../PopupMenu/PopupMenu';
 
-function Movies() {
+function Movies({loggedIn}) {
 
   const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
 
@@ -22,7 +22,7 @@ function closePopupMenu() {
 
     return ( 
       <>
-        <Header onCollMenuClick={handleCollMenuClick}/>
+        <Header onCollMenuClick={handleCollMenuClick} loggedIn={loggedIn}/>
         <SearchForm />
         <Preloader />
         <MoviesCardList />

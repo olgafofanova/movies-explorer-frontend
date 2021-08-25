@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { Route, Switch, Redirect, withRouter, useHistory } from 'react-router-dom';
 
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+
 import './App.css';
-import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -25,6 +26,11 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const history = useHistory();
+  useEffect(() => {
+    tokenCheck();
+    console.log('tokenCheck');
+    console.log(loggedIn);
+}, []);
 
   useEffect(() => {
    // if (loggedIn) {
@@ -36,7 +42,8 @@ function App() {
         // .catch(err => {
         //     console.log('Ошибка при получении данных', err);
         // });
-
+        console.log('ggg');
+        console.log(loggedIn);
     // первоначальная загрузка карточек
     moviesApi.getCards()
         .then(res => {
@@ -53,6 +60,27 @@ function App() {
 // }, [loggedIn]);
 
   // setLoggedIn(true);
+
+  const tokenCheck = () => {        
+    // const jwt = localStorage.getItem('jwt');
+    // if (!jwt) {
+    //   return;
+    // }    
+    // auth
+    //   .checkToken(jwt)
+    //   .then((res) => {
+    //       console.log(res);
+    //       console.log(res.email);
+    //    // setUserEmail(res.data.email); 
+    //     setUserEmail(res.email); 
+    //     setLoggedIn(true);
+    //   })
+    //   .catch(err => {
+    //     console.log('Ошибка при получении данных', err);
+    // }); 
+
+    setLoggedIn(true);
+  }; 
 
     //Регистрация
     const onRegister = (data) => {
@@ -71,31 +99,46 @@ function App() {
 
     //Авторизация
     const onLogin = (data) => {
-      return auth
-        .authorize(data)
-        .then(({ token }) => {
-          setUserEmail(data.email);
-          localStorage.setItem('jwt', token);
-          setLoggedIn(true);            
-        })
-        .catch((err) => {setIsErrRegisration(true);
-        });
-        
+      // return auth
+      //   .authorize(data)
+      //   .then(({ token }) => {
+      //     setUserEmail(data.email);
+      //     localStorage.setItem('jwt', token);
+      //     setLoggedIn(true);            
+      //   })
+      //   .catch((err) => {setIsErrRegisration(true);
+      //   });
+      setLoggedIn(true); 
+
+      setUserEmail('Имя');
+      console.log(userEmail);
+        console.log('ав -'+ loggedIn);
+      history.push('/movies');
     };
 
   // Выход
   const onLogout = () => {
-      setLoggedIn(false);
+     // setLoggedIn(false);
       setUserEmail(null);  
       localStorage.removeItem('jwt');
-      history.push('/sign-in');
+      history.push('/signin');
     };
+
+
+    const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
+
+    function handleCollMenuClick(event) {
+      setIsPopupMenuOpen(true);
+      console.log(isPopupMenuOpen);
+  };
+  
+  function closePopupMenu() {
+    setIsPopupMenuOpen(false);
+  };
 
   return (
     <div className="body">
       <div className="page">
-        {loggedIn ? <Header />:null}
-        <Header />
         <Switch>
           <Route path="/signup">
             <Register onRegister={onRegister} />
@@ -103,17 +146,30 @@ function App() {
         <Route path="/signin">
           <Login  onLogin={onLogin} />
         </Route>
-        <Route path="/profile">
-          <Profile />
-        </Route>
-        <Route path="/movies">
-          <Movies />
-        </Route>
-        <Route path="/saved-movies">
-          <SavedMovies />
-        </Route>                
+
+        <ProtectedRoute 
+                            path="/profile" 
+                            loggedIn={loggedIn} 
+                            component={Profile} 
+                            onCollMenuClick={handleCollMenuClick}
+          isPopupMenuOpen={isPopupMenuOpen}
+          closePopupMenu={closePopupMenu}
+                        />
+
+        <ProtectedRoute 
+                            path="/movies" 
+                            loggedIn={loggedIn} 
+                            component={Movies} 
+                            onCollMenuClick={handleCollMenuClick}
+                        />
+        <ProtectedRoute 
+                            component={SavedMovies} 
+                            path="/saved-movies" 
+                            loggedIn={loggedIn}
+                            onCollMenuClick={handleCollMenuClick}
+                        />               
         <Route exact path="/">
-          <Main />
+          <Main loggedIn={loggedIn}/>
         </Route>
         <Route path="*">
           <PageNotFound />

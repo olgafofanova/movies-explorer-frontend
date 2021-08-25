@@ -4,22 +4,11 @@ import './Profile.css';
 import Header from '../Header/Header';
 import PopupMenu from '../PopupMenu/PopupMenu';
 
-function Profile() {
-
-  const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
-
-  function handleCollMenuClick(event) {
-    setIsPopupMenuOpen(true);
-    console.log(isPopupMenuOpen);
-};
-
-function closePopupMenu() {
-  setIsPopupMenuOpen(false);
-};
+function Profile({loggedIn, onCollMenuClick, isPopupMenuOpen, closePopupMenu}) {
 
     return ( 
         <>
-          <Header  onCollMenuClick={handleCollMenuClick}/>
+          <Header loggedIn={loggedIn} onCollMenuClick={onCollMenuClick}/>
           <div className="profile">
             <div className="profile__container">
               <h2 className="profile__header">

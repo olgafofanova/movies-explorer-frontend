@@ -4,7 +4,7 @@ import logo from '../../images/logo.svg';
 
 function Logo() {
     return ( 
-        <a href="/" target="_blank">
+        <a href="/" target="_self">
         <img className="logo" src={logo}  alt="Логотип"/> 
       </a> 
     );
