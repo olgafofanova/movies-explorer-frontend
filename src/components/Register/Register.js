@@ -85,7 +85,7 @@ function Register({ onRegister }) {
             <button type="submit" className="register__button-submit">Зарегистрироваться</button>
           </form>
             <span className="register__link">Уже зарегистрированы? 
-            <Link to="signup" className="register__link register__link-accent">Войти</Link>
+            <Link to="signin" className="register__link register__link-accent">Войти</Link>
             </span> 
           </div>
         </div>

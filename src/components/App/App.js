@@ -20,6 +20,10 @@ function App() {
   const [isSuccessRegisration, setIsSuccessRegisration] = useState(false);
   const [cards, setCards] = useState([]);
 
+  const [isErrRegisration, setIsErrRegisration] = useState(false);    
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+
   const history = useHistory();
 
   useEffect(() => {
@@ -57,13 +61,35 @@ function App() {
         .then(() => {      
           setUserEmail(data.email);      
           setIsSuccessRegisration(true);
-          history.push('/sign-in');
+          history.push('/signin');
         })
         // .catch((err) => {setIsErrRegisration(true);
         // });
                 .catch((err) => { console.log(err);
         });
   };
+
+    //Авторизация
+    const onLogin = (data) => {
+      return auth
+        .authorize(data)
+        .then(({ token }) => {
+          setUserEmail(data.email);
+          localStorage.setItem('jwt', token);
+          setLoggedIn(true);            
+        })
+        .catch((err) => {setIsErrRegisration(true);
+        });
+        
+    };
+
+  // Выход
+  const onLogout = () => {
+      setLoggedIn(false);
+      setUserEmail(null);  
+      localStorage.removeItem('jwt');
+      history.push('/sign-in');
+    };
 
   return (
     <div className="body">
@@ -75,7 +101,7 @@ function App() {
             <Register onRegister={onRegister} />
           </Route>
         <Route path="/signin">
-          <Login />
+          <Login  onLogin={onLogin} />
         </Route>
         <Route path="/profile">
           <Profile />
