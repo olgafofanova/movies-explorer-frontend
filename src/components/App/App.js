@@ -20,6 +20,9 @@ function App() {
   const [userEmail, setUserEmail] = useState(null);
   const [isSuccessRegisration, setIsSuccessRegisration] = useState(false);
   const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+ 
 
   const [isErrRegisration, setIsErrRegisration] = useState(false);    
   const [selectedCard, setSelectedCard] = useState(null);
@@ -44,15 +47,7 @@ function App() {
         // });
         console.log('ggg');
         console.log(loggedIn);
-    // первоначальная загрузка карточек
-    moviesApi.getCards()
-        .then(res => {
-            setCards(res);
-            console.log(res)
-        })
-        .catch(err => {
-            console.log('Ошибка при получении данных', err);
-        });
+
 
      // history.push('/main');
    // }
@@ -60,6 +55,31 @@ function App() {
 // }, [loggedIn]);
 
   // setLoggedIn(true);
+
+  function handleCardsLoad(event) {
+    // загрузка карточек по кнопке
+    console.log('нажали кнопку поиска');
+    setLoading(true);
+    moviesApi.getCards()
+        .then(res => {
+            setCards(res);
+            console.log(res)
+        })
+        .catch(err => {
+            console.log('Ошибка при получении данных', err);
+        })
+        .finally(()=>{setLoading(false)} );
+        console.log('закончен поиск');
+        console.log(cards)
+} 
+
+function handleCardLike(event) {
+  // Сохранение карточки
+} 
+
+function handleCardDelete(event) {
+  // Удаление из сохраненных
+} 
 
   const tokenCheck = () => {        
     // const jwt = localStorage.getItem('jwt');
@@ -158,15 +178,21 @@ function App() {
 
         <ProtectedRoute 
                             path="/movies" 
-                            loggedIn={loggedIn} 
+                            //loggedIn={loggedIn} 
+                            loggedIn={true}
                             component={Movies} 
                             onCollMenuClick={handleCollMenuClick}
+                            onCardsLoadClick={handleCardsLoad}
+                            cards={cards} 
+                            onCardLike={handleCardLike} 
+                            loading={loading}
                         />
         <ProtectedRoute 
                             component={SavedMovies} 
                             path="/saved-movies" 
                             loggedIn={loggedIn}
                             onCollMenuClick={handleCollMenuClick}
+                            onCardDelete={handleCardDelete}
                         />               
         <Route exact path="/">
           <Main loggedIn={loggedIn}/>

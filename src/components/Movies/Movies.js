@@ -7,7 +7,7 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 import PopupMenu from '../PopupMenu/PopupMenu';
 
-function Movies({loggedIn}) {
+function Movies({loggedIn, onCardsLoadClick, cards, onCardLike, loading}) {
 
   const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
 
@@ -23,9 +23,8 @@ function closePopupMenu() {
     return ( 
       <>
         <Header onCollMenuClick={handleCollMenuClick} loggedIn={loggedIn}/>
-        <SearchForm />
-        <Preloader />
-        <MoviesCardList />
+        <SearchForm onCardsLoadClick={onCardsLoadClick}/>
+        {loading ? <Preloader /> :<MoviesCardList cards={cards} onCardLike={onCardLike} />}
         <Footer />
         <PopupMenu 
                         isOpen={isPopupMenuOpen} 

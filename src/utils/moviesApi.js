@@ -1,4 +1,4 @@
-//import { config } from './config.js';
+import { config } from './config.js';
 
 class Api {
     constructor(config) {
@@ -25,12 +25,12 @@ class Api {
 }
 
 
-const config = {
-    baseUrlMovies: 'https://api.nomoreparties.co/beatfilm-movies',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-};
+// const config = {
+//     baseUrlMovies: 'https://api.nomoreparties.co/beatfilm-movies',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+// };
 
 const moviesApi = new Api(config);
 export default moviesApi;

@@ -46,6 +46,10 @@
   padding: 8px 10px;
 }
 
+.search-form__button-find:hover {
+cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   .search-form {
     padding: 60px 30px 10px;

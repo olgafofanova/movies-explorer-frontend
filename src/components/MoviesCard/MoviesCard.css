@@ -4,6 +4,10 @@
   background: #F4F4F4;
 }
 
+.movies-card__trailer-link {
+  order: 1;
+}
+
 .movies-card__info-container {
   flex-grow: 1;
   padding: 16px;
@@ -17,7 +21,6 @@
   width: 220px;
   object-fit: cover;
   display: block;
-  order: 1;
 }
 
 .movies-card__info {
@@ -64,6 +67,9 @@
   
   .movies-card__img {
     width: 100%;
+  }
+
+  .movies-card__trailer-link {
     order: 0;
   }
 
