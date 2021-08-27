@@ -5,8 +5,6 @@ function PopupMenu({ onClose, isOpen, itemAccent }) {
 
   const popupOpened = isOpen ? 'popup_opened' : '';
 
-  console.log(popupOpened);
-
     return ( 
         <section className={`popup ${popupOpened}`}>
           <div className="popup__container">

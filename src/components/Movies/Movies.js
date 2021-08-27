@@ -25,7 +25,6 @@ function closePopupMenu() {
         <Header onCollMenuClick={handleCollMenuClick} loggedIn={loggedIn}/>
         <SearchForm onCardsLoadClick={onCardsLoadClick}/>
         {loading ? <Preloader /> :<MoviesCardList cards={cards} onCardLike={onCardLike} />}
-        <Footer />
         <PopupMenu 
                         isOpen={isPopupMenuOpen} 
                         onClose={closePopupMenu} 

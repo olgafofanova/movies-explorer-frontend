@@ -6,14 +6,22 @@ import More from '../More/More';
 
 function MoviesCardList ({cards, onCardLike}) {
 
-    const [countCards, setcountCards] = useState(5);
-    // const showCards  = months.slice(2, 5);
+    const [countCards, setcountCards] = useState(5); 
+ //   const [isFilterCheckbox, setisFilterCheckbox] = useState(5);
+ const tmp = cards.slice(0, countCards);
 
+//  {cards.slice(0, countCards).map((card) => {
+
+
+    function handleMoreClick(event) {
+        setcountCards( countCards + 5 );
+    };
 
     return ( 
         <section className="movies-cardlist">   
         <div className="movies-cardlist_card-container">   
-        {cards.map((card) => {
+        {tmp.map((card) => {
+        {/* {cards.map((card) => { */}
                             return <MoviesCard 
                                     key={card._id} 
                                     card={card} 
@@ -22,7 +30,7 @@ function MoviesCardList ({cards, onCardLike}) {
                             ) 
                 } 
             </div>
-            <More />
+            <More  onClick={handleMoreClick}/>
         </section>
 
     );

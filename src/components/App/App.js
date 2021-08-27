@@ -14,6 +14,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import * as auth from '../../utils/auth';
 import moviesApi from '../../utils/moviesApi';
+import {filterMovies} from '../../utils/filterMovies';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -31,39 +32,16 @@ function App() {
   const history = useHistory();
   useEffect(() => {
     tokenCheck();
-    console.log('tokenCheck');
-    console.log(loggedIn);
+    console.log('loggedIn' + loggedIn);
 }, []);
 
-  useEffect(() => {
-   // if (loggedIn) {
-        // первоначальная загрузка данных профиля
-        // api.getUser()
-        // .then(res => {
-        //     setCurrentUser(res);
-        // })
-        // .catch(err => {
-        //     console.log('Ошибка при получении данных', err);
-        // });
-        console.log('ggg');
-        console.log(loggedIn);
-
-
-     // history.push('/main');
-   // }
-  },[]);
-// }, [loggedIn]);
-
-  // setLoggedIn(true);
-
-  function handleCardsLoad(event) {
+  function handleCardsLoad(searchWord) {
     // загрузка карточек по кнопке
     console.log('нажали кнопку поиска');
     setLoading(true);
     moviesApi.getCards()
         .then(res => {
-            setCards(res);
-            console.log(res)
+            setCards(filterMovies(res, searchWord));
         })
         .catch(err => {
             console.log('Ошибка при получении данных', err);
