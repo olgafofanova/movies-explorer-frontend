@@ -14,11 +14,14 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import * as auth from '../../utils/auth';
 import moviesApi from '../../utils/moviesApi';
+import api from '../../utils/api';
 import {filterMovies} from '../../utils/filterMovies';
+import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [userEmail, setUserEmail] = useState(null);
+  const [userName, setUserName] = useState(null);
   const [isSuccessRegisration, setIsSuccessRegisration] = useState(false);
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,13 +33,27 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const history = useHistory();
+
   useEffect(() => {
     tokenCheck();
-    console.log('loggedIn' + loggedIn);
-}, []);
+}, [ ] );
+
+// useEffect(() => {
+//   if (loggedIn) {
+//       // первоначальная загрузка данных профиля
+//       api.getUser()
+//       .then(res => {
+//           setCurrentUser(res);
+//       })
+//       .catch(err => {
+//           console.log('Ошибка при получении данных', err);
+//       });
+//   }
+// }, [loggedIn]);  
+
 
   function handleCardsLoad(searchWord) {
-    // загрузка карточек по кнопке
+    // загрузка карточек по кнопке поиска
     console.log('нажали кнопку поиска');
     setLoading(true);
     moviesApi.getCards()
@@ -59,25 +76,19 @@ function handleCardDelete(event) {
   // Удаление из сохраненных
 } 
 
-  const tokenCheck = () => {        
-    // const jwt = localStorage.getItem('jwt');
-    // if (!jwt) {
-    //   return;
-    // }    
-    // auth
-    //   .checkToken(jwt)
-    //   .then((res) => {
-    //       console.log(res);
-    //       console.log(res.email);
-    //    // setUserEmail(res.data.email); 
-    //     setUserEmail(res.email); 
-    //     setLoggedIn(true);
-    //   })
-    //   .catch(err => {
-    //     console.log('Ошибка при получении данных', err);
-    // }); 
-
-    setLoggedIn(true);
+  const tokenCheck = () => {     
+    auth
+    .checkToken()
+     .then((res) => {
+       console.log(res);
+      //  setUserEmail(res.email); 
+       setCurrentUser(res);
+     })
+     .catch(err => {
+      setLoggedIn(false)
+       console.log('Ошибка при получении данных', err);
+   }); 
+   console.log('checkToken');
   }; 
 
     //Регистрация
@@ -97,30 +108,41 @@ function handleCardDelete(event) {
 
     //Авторизация
     const onLogin = (data) => {
-      // return auth
-      //   .authorize(data)
-      //   .then(({ token }) => {
-      //     setUserEmail(data.email);
-      //     localStorage.setItem('jwt', token);
-      //     setLoggedIn(true);            
-      //   })
-      //   .catch((err) => {setIsErrRegisration(true);
-      //   });
-      setLoggedIn(true); 
-
-      setUserEmail('Имя');
-      console.log(userEmail);
-        console.log('ав -'+ loggedIn);
-      history.push('/movies');
+      return auth
+      .authorize(data)
+      .then(({ token }) => {
+        setUserEmail(data.email);
+        setUserName(data.name);
+        localStorage.setItem('jwt', token);
+        setLoggedIn(true);   
+        history.push('/movies');         
+      })
+      .catch((err) => {setIsErrRegisration(true);
+      });
     };
 
   // Выход
   const onLogout = () => {
-     // setLoggedIn(false);
+    //запрос разлогина
+      setLoggedIn(false);
       setUserEmail(null);  
       localStorage.removeItem('jwt');
-      history.push('/signin');
+      history.push('/');
     };
+
+    function handleUpdateProfile (data) {   
+      console.log(data);  
+      api.setUserInfo(data)
+      .then(res => {
+       setCurrentUser(res); 
+       console.log('после сохранения');     
+       console.log(res);   
+      })
+      .catch(err => {
+          console.log('Ошибка при получении данных', err);
+      });
+   };
+
 
 
     const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
@@ -137,6 +159,7 @@ function handleCardDelete(event) {
   return (
     <div className="body">
       <div className="page">
+      <CurrentUserContext.Provider value={currentUser}>
         <Switch>
           <Route path="/signup">
             <Register onRegister={onRegister} />
@@ -150,15 +173,17 @@ function handleCardDelete(event) {
                             loggedIn={loggedIn} 
                             component={Profile} 
                             onCollMenuClick={handleCollMenuClick}
-          isPopupMenuOpen={isPopupMenuOpen}
-          closePopupMenu={closePopupMenu}
+                            isPopupMenuOpen={isPopupMenuOpen}
+                            closePopupMenu={closePopupMenu}
+                            onLogout={onLogout}
+                            onEditProfile={handleUpdateProfile}
                         />
 
         <ProtectedRoute 
                             path="/movies" 
-                            //loggedIn={loggedIn} 
-                            loggedIn={true}
+                            // loggedIn={true}
                             component={Movies} 
+                            loggedIn= { loggedIn } 
                             onCollMenuClick={handleCollMenuClick}
                             onCardsLoadClick={handleCardsLoad}
                             cards={cards} 
@@ -168,18 +193,29 @@ function handleCardDelete(event) {
         <ProtectedRoute 
                             component={SavedMovies} 
                             path="/saved-movies" 
-                            loggedIn={loggedIn}
+                            loggedIn={ loggedIn }
                             onCollMenuClick={handleCollMenuClick}
                             onCardDelete={handleCardDelete}
                         />               
         <Route exact path="/">
           <Main loggedIn={loggedIn}/>
         </Route>
+
+        <Route path="/movies1">
+          <Movies loggedIn={loggedIn}
+          onCollMenuClick={handleCollMenuClick}
+          onCardsLoadClick={handleCardsLoad}
+          cards={cards} 
+          onCardLike={handleCardLike} 
+          loading={loading}/>
+        </Route>
+
         <Route path="*">
           <PageNotFound />
         </Route>
       </Switch>
       {loggedIn ? <Footer />:null}    
+      </CurrentUserContext.Provider>
     </div> 
   </div>
   );

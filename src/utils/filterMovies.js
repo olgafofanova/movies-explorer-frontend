@@ -1,12 +1,14 @@
-
-import { config } from './config.js';
-const BASE_URL=config.baseUrlMain;
-const CONFIG_HEADERS=config.headers;
-
-
+import React from 'react';
 
 export const filterMovies = (cards, searchWord) => {
   return cards.filter( (card) => {
     return card.nameRU.includes(searchWord); 
   });
+}
+
+  export const filterCheckbox = (cards) => {
+    return cards.filter( (card) => {
+      return card.duration < 41; 
+    });
+
 };

@@ -4,7 +4,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import icon from '../../images/icon-find.png';
 
 
-function SearchForm({onCardsLoadClick}) {
+function SearchForm({onCardsLoadClick, onFilterCheckbox, isFilterChecked}) {
 
   const [searchWord, setSearchWord] = useState(''); 
 
@@ -37,7 +37,7 @@ function SearchForm({onCardsLoadClick}) {
               </label>                
             <button type="submit" className="search-form__button-find" onClick={onCardsLoadClick} >Найти</button>  
           </form>
-        <FilterCheckbox />
+        <FilterCheckbox onFilterCheckbox={onFilterCheckbox} isFilterChecked={isFilterChecked}/>
         </div>
       </section>
     );

@@ -38,3 +38,4 @@ export const checkToken = (token) => {
   })
     .then(res => parseResponse(res));
 };
+

@@ -2,7 +2,7 @@ import { config } from './config.js';
 
 class Api {
     constructor(config) {
-        this.baseUrl = config.baseUrl;
+        this.baseUrl = config.baseUrlMain;
         this.headers = config.headers;
     }
 
@@ -15,7 +15,6 @@ class Api {
 
     postCard(data) {
         return fetch(`${this.baseUrl}/cards`, {
-       // return fetch(`http://api.fofanaya.nomoredomains.club/cards`, {
        method: 'POST',
                 credentials: 'include',
                 headers: this.headers,
@@ -28,8 +27,6 @@ class Api {
 
     setUserInfo(data) {
         return fetch(`${this.baseUrl}/users/me`, {
-     //   return fetch(`http://api.fofanaya.nomoredomains.club/users/me`, {
-     
      method: 'PATCH',
                 credentials: 'include',
                 headers: this.headers,
@@ -42,7 +39,6 @@ class Api {
     
     setUserAvatar(data) {
         return fetch(`${this.baseUrl}/users/me/avatar`, {
-     //   return fetch(`http://api.fofanaya.nomoredomains.club/users/me/avatar`, {
      method: 'PATCH',
                 credentials: 'include',
                 headers: this.headers,
@@ -55,7 +51,6 @@ class Api {
 
     getUser() {
         return fetch(`${this.baseUrl}/users/me`, {
-     //   return fetch(`http://api.fofanaya.nomoredomains.club/users/me`, {
                 headers: this.headers,
                 method: 'GET',
                 credentials: 'include',
@@ -65,7 +60,6 @@ class Api {
 
     getCards() {
         return fetch(`${this.baseUrl}/cards`, {
-     //   return fetch(`http://api.fofanaya.nomoredomains.club/cards`, {
                 headers: this.headers,
                 method: 'GET',
                 credentials: 'include',
@@ -75,7 +69,6 @@ class Api {
 
     deleteCard({ _id }) {
         return fetch(`${this.baseUrl}/cards/${_id}`, {
-    //    return fetch(`http://api.fofanaya.nomoredomains.club/cards/${_id}`, {
     method: 'DELETE',
                 credentials: 'include',
                 headers: this.headers,
@@ -86,7 +79,6 @@ class Api {
     changeLikeCardStatus({ _id, noIsLiked }) {
         if (noIsLiked){
            return fetch(`${this.baseUrl}/cards/${_id}/likes`, {
-        //    return fetch(`http://api.fofanaya.nomoredomains.club/cards/${_id}/likes`, {
         method: 'PUT',
                 credentials: 'include',
                 headers: this.headers
@@ -94,7 +86,6 @@ class Api {
             .then(res => this._parseResponse(res))   
         } else {
             return fetch(`${this.baseUrl}/cards/${_id}/likes`, {
-         //   return fetch(`http://api.fofanaya.nomoredomains.club/cards/${_id}/likes`, {
          method: 'DELETE',
                 credentials: 'include',
                 headers: this.headers

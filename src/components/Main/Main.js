@@ -15,7 +15,7 @@ function Main({loggedIn}) {
          <Techs />
          <AboutMe />
          <Portfolio />
-         <Footer />
+         {loggedIn ? null : <Footer />} 
         </ >
 
     );

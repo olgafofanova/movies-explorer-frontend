@@ -3,8 +3,43 @@ import { Link, withRouter } from 'react-router-dom';
 import './Profile.css';
 import Header from '../Header/Header';
 import PopupMenu from '../PopupMenu/PopupMenu';
+import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
-function Profile({loggedIn, onCollMenuClick, isPopupMenuOpen, closePopupMenu}) {
+function Profile({loggedIn, onCollMenuClick, isPopupMenuOpen, closePopupMenu, onLogout, onEditProfile}) {
+
+  const currentUser = React.useContext(CurrentUserContext);
+  const [isEditing, setIsEditingn] = useState(false);
+
+  const [name, setName ] = useState(currentUser.name);
+
+
+  console.log(currentUser);
+
+  const [profileData, setProfileData] = useState({
+    name: currentUser.name,
+    email: currentUser.email,
+  });
+
+  console.log(profileData);
+  console.log(name);
+
+  const onEdit = () => {
+    setIsEditingn(true);
+    };
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setProfileData({
+        ...profileData,
+        [name]: value,
+      });
+    };
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log(profileData);
+      onEditProfile(profileData);
+    };
 
     return ( 
         <>
@@ -12,15 +47,15 @@ function Profile({loggedIn, onCollMenuClick, isPopupMenuOpen, closePopupMenu}) {
           <div className="profile">
             <div className="profile__container">
               <h2 className="profile__header">
-                Привет, Ольга!
+                Привет, {currentUser.name}!
               </h2>
-              <div className="profile__info">
+              <div className= {`profile__info ${ isEditing ? 'profile__hide' : ''}`}>
                 <div className="profile__info-line">
                   <span className="profile__info-text">
                      Имя
                   </span>
                   <span className="profile__info-text">
-                     Ольга
+                  {currentUser.name}
                   </span>
                 </div> 
                 <div className="profile__info-line">
@@ -28,12 +63,12 @@ function Profile({loggedIn, onCollMenuClick, isPopupMenuOpen, closePopupMenu}) {
                   E-mail
                   </span>
                   <span className="profile__info-text">
-                  pochta@yandex.ru
+                  {currentUser.email}
                   </span>
                 </div> 
-                <button type="submit" className="profile__button-edit">Редактировать</button>
+                <button type="button" onClick={onEdit} className="profile__button-edit">Редактировать</button>
               </div>
-              <form className="profile__form  profile__hide">
+              <form className= {`profile__form ${ isEditing ? '' : 'profile__hide'}`}  onSubmit={handleSubmit}>
                 <fieldset className="profile__fieldset">          
                   <label className = "profile__field">
                     Имя
@@ -41,11 +76,12 @@ function Profile({loggedIn, onCollMenuClick, isPopupMenuOpen, closePopupMenu}) {
                     type="text"       
                     className="profile__input profile__input_type_username" 
                     id="profile-username" 
-                    name="username" 
+                    name="name" 
                     placeholder=""  
                     required 
-                    minLength="2" 
-                    maxLength="40" 
+                    minLength="1" 
+                    onChange={handleChange} 
+                    value={profileData.name || ''} 
                   />
                   <span className="profile__input-error profile-username-error"> </span> 
                   </label> 
@@ -58,15 +94,16 @@ function Profile({loggedIn, onCollMenuClick, isPopupMenuOpen, closePopupMenu}) {
                     name="email" 
                     placeholder="" 
                     required 
-                    minLength="2" 
-                    maxLength="200" 
+                    minLength="1" 
+                    onChange={handleChange} 
+                    value={profileData.email || ''} 
                   />
                   <span className="profile__input-error profile-password-error"></span> 
                   </label> 
                 </fieldset>          
                 <button type="submit" className="profile__button-submit">Сохранить</button>
               </form>
-              <Link to="/" className="profile__link">Выйти из аккаунта</Link>
+              <button to="/" className="profile__button-logout" onClick={onLogout}>Выйти из аккаунта</button>
             </div>    
           </div>
           <PopupMenu 

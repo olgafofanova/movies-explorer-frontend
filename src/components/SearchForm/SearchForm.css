@@ -1,6 +1,11 @@
 .search-form {
   margin: 0;
   padding: 80px 70px 10px;
+  max-width: 1280px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
 }
 
 .search-form__container {
@@ -33,6 +38,9 @@
   color: #A0A0A0;
   padding: 0;
   margin: 0;
+  width: 100%;
+  border: none;
+  outline:none;
 }
 
 .search-form__button-find {

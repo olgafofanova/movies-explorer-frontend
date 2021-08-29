@@ -1,10 +1,10 @@
 import React from 'react';
 import './More.css';
 
-function More({ onClick }) {
+function More({ onClick, isHidden }) {
     return ( 
       <div className="more">
-        <button type="submit" className="more__button" onClick={onClick}>Ещё</button>
+        <button type="submit" className={`more__button  ${ isHidden ? 'more__button_hidden' : ''}`}  onClick={onClick}>Ещё</button>
       </div>
     );
 }
