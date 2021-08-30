@@ -5,7 +5,7 @@ import Header from '../Header/Header';
 import PopupMenu from '../PopupMenu/PopupMenu';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
-function Profile({loggedIn, onCollMenuClick, isPopupMenuOpen, closePopupMenu, onLogout, onEditProfile}) {
+function Profile({loggedIn, onCollMenuClick, onLogout, onEditProfile}) {
 
   const currentUser = React.useContext(CurrentUserContext);
   const [isEditing, setIsEditingn] = useState(false);
@@ -106,11 +106,6 @@ function Profile({loggedIn, onCollMenuClick, isPopupMenuOpen, closePopupMenu, on
               <button to="/" className="profile__button-logout" onClick={onLogout}>Выйти из аккаунта</button>
             </div>    
           </div>
-          <PopupMenu 
-                        isOpen={isPopupMenuOpen} 
-                        onClose={closePopupMenu} 
-                        itemAccent='profile'
-                    /> 
         </>        
     );
 }

@@ -1,7 +1,8 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import './PopupMenu.css';
 
-function PopupMenu({ onClose, isOpen, itemAccent }) {
+function PopupMenu({ onClose, isOpen }) {
 
   const popupOpened = isOpen ? 'popup_opened' : '';
 
@@ -12,25 +13,17 @@ function PopupMenu({ onClose, isOpen, itemAccent }) {
             <nav>
               <ul className="popup__menu">
                 <li className="popup__menu-item">
-                  <a className={`popup__menu-link ${ itemAccent=='main' ? 'popup__menu-link_accent' : ''}`} href="/" target="_self">
-                    Главная
-                  </a> 
+                <NavLink exact to="/" activeClassName="popup__menu-link_accent" className="popup__menu-link" onClick={onClose}>Главная</NavLink>
                 </li>
                 <li className="popup__menu-item">
-                  <a className={`popup__menu-link ${ itemAccent=='movies' ? 'popup__menu-link_accent' : ''}`} href="/movies" target="_self">
-                    Фильмы
-                  </a> 
+                <NavLink to="/movies" activeClassName="popup__menu-link_accent" className="popup__menu-link" onClick={onClose}>Фильмы</NavLink> 
                 </li>
                 <li className="popup__menu-item">
-                  <a className={`popup__menu-link ${ itemAccent=='saved-movies' ? 'popup__menu-link_accent' : ''}`} href="/saved-movies" target="_self">
-                    Сохранённые фильмы 
-                  </a> 
+                <NavLink to="/saved-movies" activeClassName="popup__menu-link_accent" className="popup__menu-link" onClick={onClose}>Сохранённые фильмы</NavLink>
                 </li>                   
              </ul>
             </nav> 
-            <a  className={`popup__button-profile ${ itemAccent=='profile' ? 'popup__button-profile_accent' : ''}`} href="/profile" target="_self">
-              Аккаунт
-            </a> 
+            <NavLink to="/profile" activeClassName="popup__button-profile_accent" className="popup__button-profile" onClick={onClose}>Аккаунт</NavLink>
           </div> 
         </section>
     );

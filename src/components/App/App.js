@@ -12,6 +12,7 @@ import Profile from '../Profile/Profile';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import PopupMenu from '../PopupMenu/PopupMenu';
 import * as auth from '../../utils/auth';
 import moviesApi from '../../utils/moviesApi';
 import api from '../../utils/api';
@@ -85,7 +86,7 @@ function handleCardDelete(event) {
        setCurrentUser(res);
      })
      .catch(err => {
-      setLoggedIn(false)
+      //setLoggedIn(false)
        console.log('Ошибка при получении данных', err);
    }); 
    console.log('checkToken');
@@ -180,8 +181,6 @@ function handleCardDelete(event) {
                             loggedIn={loggedIn} 
                             component={Profile} 
                             onCollMenuClick={handleCollMenuClick}
-                            isPopupMenuOpen={isPopupMenuOpen}
-                            closePopupMenu={closePopupMenu}
                             onLogout={onLogout}
                             onEditProfile={handleUpdateProfile}
                         />
@@ -199,29 +198,30 @@ function handleCardDelete(event) {
                         />
         <ProtectedRoute 
                             component={SavedMovies} 
+                            
                             path="/saved-movies" 
                             loggedIn={ loggedIn }
                             onCollMenuClick={handleCollMenuClick}
+                            
                             onCardDelete={handleCardDelete}
                         />               
         <Route exact path="/">
-          <Main loggedIn={loggedIn}/>
-        </Route>
-
-        <Route path="/movies1">
-          <Movies loggedIn={loggedIn}
-          onCollMenuClick={handleCollMenuClick}
-          onCardsLoadClick={handleCardsLoad}
-          cards={cards} 
-          onCardLike={handleCardLike} 
-          loading={loading}/>
+          <Main loggedIn={loggedIn}
+                                      onCollMenuClick={handleCollMenuClick}
+          />
         </Route>
 
         <Route path="*">
           <PageNotFound />
         </Route>
       </Switch>
-      {loggedIn ? <Footer />:null}    
+      <PopupMenu 
+                        isOpen={isPopupMenuOpen} 
+                        onClose={closePopupMenu} 
+                    /> 
+
+
+
       </CurrentUserContext.Provider>
     </div> 
   </div>

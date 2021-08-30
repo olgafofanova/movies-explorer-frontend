@@ -5,20 +5,19 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
-import PopupMenu from '../PopupMenu/PopupMenu';
+import More from '../More/More';
+import {filterCheckbox} from '../../utils/filterMovies';
 
-function Movies({loggedIn, onCardsLoadClick, cards, onCardLike, loading}) {
+function Movies({loggedIn, onCardsLoadClick, onCollMenuClick, cards, onCardLike, loading}) {
 
-  const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
   const [isFilterChecked, setIsFilterChecked] = useState(false);
+  const [countCardsShow, setcountCardsShow,] = useState(5); 
 
-  function handleCollMenuClick(event) {
-    setIsPopupMenuOpen(true);
-};
-
-function closePopupMenu() {
-  setIsPopupMenuOpen(false);
-};
+  const CardsShow = isFilterChecked ? cards : filterCheckbox(cards);
+  
+  function handleMoreClick(event) {
+    setcountCardsShow( countCardsShow + 5 );
+  };
 
 function handleFilterCheckbox(event) {
   setIsFilterChecked(!isFilterChecked);
@@ -26,14 +25,11 @@ function handleFilterCheckbox(event) {
 
     return ( 
       <>
-        <Header onCollMenuClick={handleCollMenuClick} loggedIn={loggedIn}/>
+        <Header onCollMenuClick={onCollMenuClick} loggedIn={loggedIn}/>
         <SearchForm onCardsLoadClick={onCardsLoadClick} onFilterCheckbox={handleFilterCheckbox} isFilterChecked={isFilterChecked}/>
-        {loading ? <Preloader /> :<MoviesCardList cards={cards} onCardLike={onCardLike} isFilterChecked={isFilterChecked}/>}
-        <PopupMenu 
-                        isOpen={isPopupMenuOpen} 
-                        onClose={closePopupMenu} 
-                        itemAccent='movies'
-                    /> 
+        {loading ? <Preloader /> :<MoviesCardList cards={CardsShow.slice(0, countCardsShow) } onCardLike={onCardLike} />}
+        <More  onClick={handleMoreClick} isHidden={ CardsShow.length < countCardsShow } />
+        <Footer />
       </>        
     );
 }

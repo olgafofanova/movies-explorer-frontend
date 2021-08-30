@@ -35,7 +35,7 @@ function SearchForm({onCardsLoadClick, onFilterCheckbox, isFilterChecked}) {
                 />
                 <span className="search-form__input-error search-form__input-error"> </span> 
               </label>                
-            <button type="submit" className="search-form__button-find" onClick={onCardsLoadClick} >Найти</button>  
+            <button type="submit" className="search-form__button-find" >Найти</button>  
           </form>
         <FilterCheckbox onFilterCheckbox={onFilterCheckbox} isFilterChecked={isFilterChecked}/>
         </div>

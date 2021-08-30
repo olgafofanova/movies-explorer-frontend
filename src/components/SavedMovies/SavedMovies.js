@@ -4,32 +4,48 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
-import PopupMenu from '../PopupMenu/PopupMenu';
+import moviesApi from '../../utils/moviesApi';
+import {filterCheckbox, filterMovies} from '../../utils/filterMovies';
 
-function SavedMovies() {
-    const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
+function SavedMovies({ onCollMenuClick, loggedIn }) {
 
-    function handleCollMenuClick(event) {
-      setIsPopupMenuOpen(true);
-      console.log(isPopupMenuOpen);
-  };
-  
-  function closePopupMenu() {
-    setIsPopupMenuOpen(false);
-  };
+  const [cardsSaved, setCardsSaved] = useState([]);
+  const [isFilterChecked, setIsFilterChecked] = useState(false);
+  const [CardsShow, setCardsShow] = useState([]);
 
-  
+ // загрузка сохраненных карточек
+const LoadSevedCards = () => {     
+  moviesApi.getCards()
+  .then(res => {
+      setCardsSaved(res);
+      setCardsShow(res);
+  })
+  .catch(err => {
+      console.log('Ошибка при получении данных', err);
+  })
+};
+
+ useEffect(() => {
+    LoadSevedCards();
+}, [ ] );
+
+
+function handleCardsLoad(searchWord) {
+  if (searchWord)  {
+    setCardsShow(filterMovies(cardsSaved, searchWord));
+  }
+} 
+
+function handleFilterCheckbox(event) {
+  setIsFilterChecked(!isFilterChecked);
+};
+
     return ( 
         <>
-          <Header onCollMenuClick={handleCollMenuClick}/>
-          <SearchForm />
-          <MoviesCardList />
-          <Footer />
-          <PopupMenu 
-                        isOpen={isPopupMenuOpen} 
-                        onClose={closePopupMenu} 
-                        itemAccent='saved-movies'
-                    /> 
+          <Header onCollMenuClick={onCollMenuClick} loggedIn={loggedIn}/>
+        <SearchForm onCardsLoadClick={handleCardsLoad} onFilterCheckbox={handleFilterCheckbox} isFilterChecked={isFilterChecked}/>
+        <MoviesCardList cards={ isFilterChecked ? CardsShow : filterCheckbox(CardsShow) } />
+        <Footer />
        </> 
     );
 }

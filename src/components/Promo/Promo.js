@@ -2,10 +2,10 @@ import React from 'react';
 import './Promo.css';
 import Header from '../Header/Header';
 
-function Promo({loggedIn}) {
+function Promo({loggedIn, onCollMenuClick}) {
     return ( 
         <section className="promo">
-          <Header loggedIn={loggedIn}/>
+          <Header loggedIn={loggedIn} onCollMenuClick={onCollMenuClick}/>
           <div className="promo__container">
             <h2  className="promo__title">
               Учебный проект студента факультета Веб-разработки.
