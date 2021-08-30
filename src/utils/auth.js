@@ -39,3 +39,11 @@ export const checkToken = (token) => {
     .then(res => parseResponse(res));
 };
 
+export const logOut = () => {
+  return fetch(`${BASE_URL}/signout`, {
+    method: 'POST',
+    headers: CONFIG_HEADERS,
+    credentials: 'include',
+  })
+  .then(res => parseResponse(res));
+};

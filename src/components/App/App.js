@@ -123,11 +123,18 @@ function handleCardDelete(event) {
 
   // Выход
   const onLogout = () => {
-    //запрос разлогина
-      setLoggedIn(false);
-      setUserEmail(null);  
-      localStorage.removeItem('jwt');
-      history.push('/');
+    return auth
+      .logOut()
+      .then((res) => {
+        setLoggedIn(false);
+        setUserEmail(null);  
+        localStorage.removeItem('jwt');
+        history.push('/'); 
+        console.log(res);     
+      })
+      .catch((err) => {console.log(err);  
+      });
+
     };
 
     function handleUpdateProfile (data) {   
