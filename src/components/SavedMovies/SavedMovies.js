@@ -7,26 +7,27 @@ import Footer from '../Footer/Footer';
 import moviesApi from '../../utils/moviesApi';
 import {filterCheckbox, filterMovies} from '../../utils/filterMovies';
 
-function SavedMovies({ onCollMenuClick, loggedIn }) {
+function SavedMovies({ onCollMenuClick, loggedIn, cardsSaved, onCardDelete }) {
 
-  const [cardsSaved, setCardsSaved] = useState([]);
+  //const [cardsSaved, setCardsSaved] = useState([]);
   const [isFilterChecked, setIsFilterChecked] = useState(false);
   const [CardsShow, setCardsShow] = useState([]);
 
  // загрузка сохраненных карточек
-const LoadSevedCards = () => {     
-  moviesApi.getCards()
-  .then(res => {
-      setCardsSaved(res);
-      setCardsShow(res);
-  })
-  .catch(err => {
-      console.log('Ошибка при получении данных', err);
-  })
-};
+// const LoadSevedCards = () => {     
+//   moviesApi.getCards()
+//   .then(res => {
+//       setCardsSaved(res);
+//       setCardsShow(res);
+//   })
+//   .catch(err => {
+//       console.log('Ошибка при получении данных', err);
+//   })
+// };
 
  useEffect(() => {
-    LoadSevedCards();
+  //  LoadSevedCards();
+  setCardsShow(cardsSaved);
 }, [ ] );
 
 

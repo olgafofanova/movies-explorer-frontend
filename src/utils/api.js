@@ -59,7 +59,7 @@ class Api {
     }
 
     getCards() {
-        return fetch(`${this.baseUrl}/cards`, {
+        return fetch(`${this.baseUrl}/movies`, {
                 headers: this.headers,
                 method: 'GET',
                 credentials: 'include',

@@ -20,14 +20,20 @@ import {filterMovies} from '../../utils/filterMovies';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  console.log("cookies", document.cookie);
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  console.log('loggedIn - в начале:', loggedIn);
+
+  // const [count, setcount] = useState(0);
+  // setcount(count+1)
+  // console.log(count);
   const [userEmail, setUserEmail] = useState(null);
   const [userName, setUserName] = useState(null);
   const [isSuccessRegisration, setIsSuccessRegisration] = useState(false);
   const [cards, setCards] = useState([]);
+  const [cardsSaved, setCardsSaved] = useState([]);
   const [loading, setLoading] = useState(false);
-
- 
 
   const [isErrRegisration, setIsErrRegisration] = useState(false);    
   const [selectedCard, setSelectedCard] = useState(null);
@@ -37,20 +43,25 @@ function App() {
 
   useEffect(() => {
     tokenCheck();
-}, [ ] );
+  }, [ ] );
 
-// useEffect(() => {
-//   if (loggedIn) {
-//       // первоначальная загрузка данных профиля
-//       api.getUser()
-//       .then(res => {
-//           setCurrentUser(res);
-//       })
-//       .catch(err => {
-//           console.log('Ошибка при получении данных', err);
-//       });
-//   }
-// }, [loggedIn]);  
+//   useEffect(() => {
+//     console.log('useEffect' , currentUser, loggedIn);
+//     if (loggedIn) {
+//       tokenCheck();
+//       console.log(currentUser);
+//           // первоначальная загрузка сохраненных карточек
+//           api.getCards()
+//               .then(res => {
+//                 setCardsSaved(res)
+//                 debugger;
+//               })
+//               .catch(err => {
+//                   console.log('Ошибка при получении данных', err);
+//               });
+//             //history.push('/main---');
+//           }
+// });  
 
 
   function handleCardsLoad(searchWord) {
@@ -82,11 +93,11 @@ function handleCardDelete(event) {
     .checkToken()
      .then((res) => {
        console.log(res);
-      //  setUserEmail(res.email); 
+       setLoggedIn(true)
        setCurrentUser(res);
      })
      .catch(err => {
-      //setLoggedIn(false)
+     // setLoggedIn(false)
        console.log('Ошибка при получении данных', err);
    }); 
    console.log('checkToken');
@@ -111,12 +122,14 @@ function handleCardDelete(event) {
     const onLogin = (data) => {
       return auth
       .authorize(data)
-      .then(({ token }) => {
-        setUserEmail(data.email);
-        setUserName(data.name);
-        localStorage.setItem('jwt', token);
-        setLoggedIn(true);   
-        history.push('/movies');         
+      .then((res) => {
+        // setUserEmail(data.email);
+        // setUserName(data.name);
+        // localStorage.setItem('jwt', token);
+        console.log('LoggedIn - в авторизации до установки', loggedIn);
+        setLoggedIn(true); 
+        console.log('onLogin', res);
+      //  history.push('/movies');         
       })
       .catch((err) => {setIsErrRegisration(true);
       });
@@ -157,7 +170,6 @@ function handleCardDelete(event) {
 
     function handleCollMenuClick(event) {
       setIsPopupMenuOpen(true);
-      console.log(isPopupMenuOpen);
   };
   
   function closePopupMenu() {
@@ -198,11 +210,10 @@ function handleCardDelete(event) {
                         />
         <ProtectedRoute 
                             component={SavedMovies} 
-                            
                             path="/saved-movies" 
                             loggedIn={ loggedIn }
                             onCollMenuClick={handleCollMenuClick}
-                            
+                            cardsSaved={cardsSaved}
                             onCardDelete={handleCardDelete}
                         />               
         <Route exact path="/">

@@ -2,7 +2,6 @@ import React from 'react';
 import './FilterCheckbox.css';
 
 function FilterCheckbox ({onFilterCheckbox, isFilterChecked}) {
-  console.log(isFilterChecked);
     return ( 
        <label  className="filter-checkbox">  
          <p className="filter-checkbox__title">Короткометражки</p>        
