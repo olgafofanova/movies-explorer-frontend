@@ -22,7 +22,7 @@ import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 function App() {
   console.log("cookies", document.cookie);
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("loggedIn")) || false);
   console.log('loggedIn - в начале:', loggedIn);
 
   // const [count, setcount] = useState(0);
@@ -34,6 +34,9 @@ function App() {
   const [cards, setCards] = useState([]);
   const [cardsSaved, setCardsSaved] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [isErr, setIsErr] = useState({isErr:false, Message:''});  
+
 
   const [isErrRegisration, setIsErrRegisration] = useState(false);    
   const [selectedCard, setSelectedCard] = useState(null);
@@ -126,12 +129,17 @@ function handleCardDelete(event) {
         // setUserEmail(data.email);
         // setUserName(data.name);
         // localStorage.setItem('jwt', token);
-        console.log('LoggedIn - в авторизации до установки', loggedIn);
         setLoggedIn(true); 
-        console.log('onLogin', res);
+        localStorage.setItem("loggedIn", true);
+        setIsErr({isErr:false, Message:''});
       //  history.push('/movies');         
       })
-      .catch((err) => {setIsErrRegisration(true);
+      .catch((err) => {
+        console.log(err);
+        setIsErr({
+          isErr:true,
+          Message:'Ошибка авторизации',
+        });
       });
     };
 
@@ -142,7 +150,8 @@ function handleCardDelete(event) {
       .then((res) => {
         setLoggedIn(false);
         setUserEmail(null);  
-        localStorage.removeItem('jwt');
+        //localStorage.removeItem('jwt');
+        localStorage.removeItem("loggedIn");
         history.push('/'); 
         console.log(res);     
       })
@@ -181,11 +190,16 @@ function handleCardDelete(event) {
       <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
+        <Route exact path="/">
+          <Main loggedIn={loggedIn}
+                                      onCollMenuClick={handleCollMenuClick}
+          />
+        </Route>
           <Route path="/signup">
             <Register onRegister={onRegister} />
           </Route>
         <Route path="/signin">
-          <Login  onLogin={onLogin} />
+          <Login  onLogin={onLogin} isErr={isErr}/>
         </Route>
 
         <ProtectedRoute 
@@ -216,11 +230,7 @@ function handleCardDelete(event) {
                             cardsSaved={cardsSaved}
                             onCardDelete={handleCardDelete}
                         />               
-        <Route exact path="/">
-          <Main loggedIn={loggedIn}
-                                      onCollMenuClick={handleCollMenuClick}
-          />
-        </Route>
+
 
         <Route path="*">
           <PageNotFound />

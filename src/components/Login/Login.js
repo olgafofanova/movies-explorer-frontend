@@ -4,7 +4,7 @@ import './Login.css';
 
 import Logo from '../Logo/Logo';
 
-function Login({ onLogin }) {
+function Login({ onLogin, isErr }) {
 
   const [loginData, setLoginData] = useState({
     email: '',
@@ -13,6 +13,7 @@ function Login({ onLogin }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setLoginData({
       ...loginData,
       [name]: value,
@@ -21,6 +22,7 @@ function Login({ onLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     onLogin(loginData);
   };
 
@@ -66,6 +68,7 @@ function Login({ onLogin }) {
             />
             <span className="login__input-error login-password-error"></span> 
           </label> 
+          <div className={`login__error ${isErr.isErr ? '' : 'login__error-hidden'}`}>{isErr.Message}</div>
         </fieldset>          
         <button type="submit" className="login__button-submit">Войти</button>
       </form>

@@ -5,7 +5,7 @@ const ProtectedRoute = ({ component: Component, ...props  }) => {
   
   useEffect(() => {
     console.log(props);
-}, []);
+});
 
   return (
     <Route>

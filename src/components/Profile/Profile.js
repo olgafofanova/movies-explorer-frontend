@@ -8,23 +8,19 @@ import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 function Profile({loggedIn, onCollMenuClick, onLogout, onEditProfile}) {
 
   const currentUser = React.useContext(CurrentUserContext);
-  const [isEditing, setIsEditingn] = useState(false);
-
-  const [name, setName ] = useState(currentUser.name);
-
-
-  console.log(currentUser);
-
   const [profileData, setProfileData] = useState({
     name: currentUser.name,
     email: currentUser.email,
   });
 
-  console.log(profileData);
-  console.log(name);
+  const [isEditing, setIsEditingn] = useState(false);
 
   const onEdit = () => {
     setIsEditingn(true);
+    setProfileData({
+      name: currentUser.name,
+      email: currentUser.email,
+    })
     };
 
     const handleChange = (e) => {
@@ -39,6 +35,7 @@ function Profile({loggedIn, onCollMenuClick, onLogout, onEditProfile}) {
       e.preventDefault();
       console.log(profileData);
       onEditProfile(profileData);
+      setIsEditingn(false);
     };
 
     return ( 

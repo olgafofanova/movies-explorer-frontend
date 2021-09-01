@@ -5,12 +5,14 @@ const CONFIG_HEADERS=config.headers;
 
 const parseResponse=(res) => {
   console.log(res, res.ok);
+
   if (res.ok) {
     
       return res.json();
 
   }
-  return Promise.reject(new Error(`Произошла ошибка со статус-кодом ${res.status}`));
+
+  return Promise.reject(new Error(`Произошла ошибка со статус-кодом ${res.status} `));
 }
 
 export const register = ({name, password, email}) => {
