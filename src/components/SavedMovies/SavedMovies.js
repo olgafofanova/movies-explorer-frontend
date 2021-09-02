@@ -28,7 +28,8 @@ function SavedMovies({ onCollMenuClick, loggedIn, cardsSaved, onCardDelete }) {
  useEffect(() => {
   //  LoadSevedCards();
   setCardsShow(cardsSaved);
-}, [ ] );
+  console.log(cardsSaved);
+}, [ cardsSaved] );
 
 
 function handleCardsLoad(searchWord) {
@@ -45,7 +46,7 @@ function handleFilterCheckbox(event) {
         <>
           <Header onCollMenuClick={onCollMenuClick} loggedIn={loggedIn}/>
         <SearchForm onCardsLoadClick={handleCardsLoad} onFilterCheckbox={handleFilterCheckbox} isFilterChecked={isFilterChecked}/>
-        <MoviesCardList cards={ isFilterChecked ? CardsShow : filterCheckbox(CardsShow) } />
+        <MoviesCardList cards={ isFilterChecked ? CardsShow : filterCheckbox(CardsShow) } cardsSaved={cardsSaved} isListCardsSaved={true} onCardDelete={onCardDelete}/>
         <Footer />
        </> 
     );

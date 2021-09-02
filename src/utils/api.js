@@ -3,6 +3,7 @@ import { config } from './config.js';
 class Api {
     constructor(config) {
         this.baseUrl = config.baseUrlMain;
+        this.baseUrlImg = config.baseUrlImage;
         this.headers = config.headers;
     }
 
@@ -13,17 +14,49 @@ class Api {
         return Promise.reject(new Error(`Произошла ошибка со статус-кодом ${res.status}`));
     }
 
+    //сохранение фильма в избранное
     postCard(data) {
-        return fetch(`${this.baseUrl}/cards`, {
+       // const urlImg = `${this.baseUrlImg}` + data.image?.url;
+        return fetch(`${this.baseUrl}/movies`, {
        method: 'POST',
                 credentials: 'include',
                 headers: this.headers,
                 body: JSON.stringify(
                     data
+                //   {
+                //     country: data.country,
+                //     director: data.director,
+                //     duration: data.duration,
+                //     year: data.year,
+                //     description: data.description,
+                //     image: urlImg,
+                //     trailer: data.trailerLink,
+                //     thumbnail: urlImg,
+                //     movieId: String(data.id),
+                //     nameRU: data.nameRU,
+                //     nameEN: data.nameEN,
+                // }
                 ),
             })
             .then(res => this._parseResponse(res));
     }
+
+    //удаление из избранных
+    deleteCard({ _id }) {
+        return fetch(`${this.baseUrl}/movies/${_id}`, {
+    method: 'DELETE',
+                credentials: 'include',
+                headers: this.headers,
+            })
+            .then(res => this._parseResponse(res));
+    }
+
+
+
+
+
+
+
 
     setUserInfo(data) {
         return fetch(`${this.baseUrl}/users/me`, {
@@ -67,14 +100,7 @@ class Api {
             .then(res => this._parseResponse(res));
     }
 
-    deleteCard({ _id }) {
-        return fetch(`${this.baseUrl}/cards/${_id}`, {
-    method: 'DELETE',
-                credentials: 'include',
-                headers: this.headers,
-            })
-            .then(res => this._parseResponse(res));
-    }
+
 
     changeLikeCardStatus({ _id, noIsLiked }) {
         if (noIsLiked){

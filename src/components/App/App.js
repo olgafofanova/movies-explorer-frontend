@@ -16,18 +16,13 @@ import PopupMenu from '../PopupMenu/PopupMenu';
 import * as auth from '../../utils/auth';
 import moviesApi from '../../utils/moviesApi';
 import api from '../../utils/api';
-import {filterMovies} from '../../utils/filterMovies';
+import {filterMovies, filterOvner, formatMovies} from '../../utils/filterMovies';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
 function App() {
-  console.log("cookies", document.cookie);
 
   const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("loggedIn")) || false);
-  console.log('loggedIn - в начале:', loggedIn);
 
-  // const [count, setcount] = useState(0);
-  // setcount(count+1)
-  // console.log(count);
   const [userEmail, setUserEmail] = useState(null);
   const [userName, setUserName] = useState(null);
   const [isSuccessRegisration, setIsSuccessRegisration] = useState(false);
@@ -48,24 +43,26 @@ function App() {
     tokenCheck();
   }, [ ] );
 
-//   useEffect(() => {
-//     console.log('useEffect' , currentUser, loggedIn);
-//     if (loggedIn) {
-//       tokenCheck();
-//       console.log(currentUser);
-//           // первоначальная загрузка сохраненных карточек
-//           api.getCards()
-//               .then(res => {
-//                 setCardsSaved(res)
-//                 debugger;
-//               })
-//               .catch(err => {
-//                   console.log('Ошибка при получении данных', err);
-//               });
-//             //history.push('/main---');
-//           }
-// });  
+  useEffect(() => {
+    console.log('useEffect' , currentUser, loggedIn);
+    if (loggedIn) {
+      tokenCheck();
+      console.log(currentUser);
+          // первоначальная загрузка сохраненных карточек
+          api.getCards()
+              .then(res => {
+                setCardsSaved(filterOvner(res,currentUser._id))
+                console.log(res);
+                console.log('после фильтрации ',filterOvner(res,currentUser._id));
+              })
+              .catch(err => {
+                  console.log('Ошибка при получении данных', err);
+              });
 
+            //history.push('/main---');
+          }
+        
+}, [loggedIn, currentUser._id]);  
 
   function handleCardsLoad(searchWord) {
     // загрузка карточек по кнопке поиска
@@ -73,7 +70,7 @@ function App() {
     setLoading(true);
     moviesApi.getCards()
         .then(res => {
-            setCards(filterMovies(res, searchWord));
+            setCards(formatMovies(filterMovies(res, searchWord)));
         })
         .catch(err => {
             console.log('Ошибка при получении данных', err);
@@ -83,13 +80,33 @@ function App() {
         console.log(cards)
 } 
 
-function handleCardLike(event) {
+function handleCardLike(data) {
   // Сохранение карточки
+  const movie = {}
+  api.postCard(data)
+  .then(newCard => {
+    // ghjdthbnm
+    setCardsSaved([newCard, ...cards]); 
+    console.log(cardsSaved)    
+  })
+  .catch(err => {
+      console.log('Ошибка при получении данных', err);
+  }); 
 } 
 
-function handleCardDelete(event) {
+function handleCardDelete(card) {
   // Удаление из сохраненных
+  api.deleteCard({ _id: card._id })
+  .then((res) => {
+    setCardsSaved((state) => state.filter((c) => !(c._id === card._id )));
+  })
+  .catch(err => {
+      console.log('Ошибка при получении данных', err);
+  });
 } 
+ 
+
+
 
   const tokenCheck = () => {     
     auth
@@ -221,6 +238,7 @@ function handleCardDelete(event) {
                             cards={cards} 
                             onCardLike={handleCardLike} 
                             loading={loading}
+                            cardsSaved={cardsSaved}
                         />
         <ProtectedRoute 
                             component={SavedMovies} 
@@ -229,7 +247,7 @@ function handleCardDelete(event) {
                             onCollMenuClick={handleCollMenuClick}
                             cardsSaved={cardsSaved}
                             onCardDelete={handleCardDelete}
-                        />               
+                        />              
 
 
         <Route path="*">
