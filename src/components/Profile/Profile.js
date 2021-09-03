@@ -5,7 +5,7 @@ import Header from '../Header/Header';
 import PopupMenu from '../PopupMenu/PopupMenu';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
-function Profile({loggedIn, onCollMenuClick, onLogout, onEditProfile}) {
+function Profile({loggedIn, onCollMenuClick, onLogout, onEditProfile, isErr}) {
 
   const currentUser = React.useContext(CurrentUserContext);
   const [profileData, setProfileData] = useState({

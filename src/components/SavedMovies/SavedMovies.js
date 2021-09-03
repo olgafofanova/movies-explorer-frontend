@@ -7,35 +7,20 @@ import Footer from '../Footer/Footer';
 import moviesApi from '../../utils/moviesApi';
 import {filterCheckbox, filterMovies} from '../../utils/filterMovies';
 
-function SavedMovies({ onCollMenuClick, loggedIn, cardsSaved, onCardDelete }) {
+function SavedMovies({ onCollMenuClick, loggedIn, cardsSaved, onCardDelete, isErr }) {
 
-  //const [cardsSaved, setCardsSaved] = useState([]);
-  const [isFilterChecked, setIsFilterChecked] = useState(false);
+  const [isFilterChecked, setIsFilterChecked] = useState(true);
   const [CardsShow, setCardsShow] = useState([]);
 
- // загрузка сохраненных карточек
-// const LoadSevedCards = () => {     
-//   moviesApi.getCards()
-//   .then(res => {
-//       setCardsSaved(res);
-//       setCardsShow(res);
-//   })
-//   .catch(err => {
-//       console.log('Ошибка при получении данных', err);
-//   })
-// };
-
  useEffect(() => {
-  //  LoadSevedCards();
   setCardsShow(cardsSaved);
-  console.log(cardsSaved);
 }, [ cardsSaved] );
 
 
 function handleCardsLoad(searchWord) {
   if (searchWord)  {
     setCardsShow(filterMovies(cardsSaved, searchWord));
-  }
+  } 
 } 
 
 function handleFilterCheckbox(event) {
@@ -45,8 +30,8 @@ function handleFilterCheckbox(event) {
     return ( 
         <>
           <Header onCollMenuClick={onCollMenuClick} loggedIn={loggedIn}/>
-        <SearchForm onCardsLoadClick={handleCardsLoad} onFilterCheckbox={handleFilterCheckbox} isFilterChecked={isFilterChecked}/>
-        <MoviesCardList cards={ isFilterChecked ? CardsShow : filterCheckbox(CardsShow) } cardsSaved={cardsSaved} isListCardsSaved={true} onCardDelete={onCardDelete}/>
+        <SearchForm onCardsLoadClick={handleCardsLoad} onFilterCheckbox={handleFilterCheckbox} isFilterChecked={isFilterChecked} isListCardsSaved={true} />
+        <MoviesCardList cards={ isFilterChecked ?  CardsShow : filterCheckbox(CardsShow) } cardsSaved={cardsSaved} isListCardsSaved={true} onCardDelete={onCardDelete} isErr={isErr}/>
         <Footer />
        </> 
     );

@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import './Register.css';
 import Logo from '../Logo/Logo';
 
-function Register({ onRegister }) {
+function Register({ onRegister, isErr }) {
 
   const [registerData, setRegisterData] = useState({
     name:'',

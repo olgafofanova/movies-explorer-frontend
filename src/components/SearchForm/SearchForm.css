@@ -30,6 +30,11 @@
   box-sizing: border-box;
 }
 
+.search-form__block-input {
+display: block;
+flex-grow:1;
+}
+
 .search-form__input {
   font-style: normal;
   font-weight: normal;
@@ -41,6 +46,14 @@
   width: 100%;
   border: none;
   outline:none;
+}
+
+.search-form__input-error {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;  
+  color: #EE3465;
 }
 
 .search-form__button-find {

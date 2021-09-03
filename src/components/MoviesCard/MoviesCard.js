@@ -3,7 +3,7 @@ import './MoviesCard.css';
 import img from '../../images/pic.png';
 import { config } from '../../utils/config';
 
-function MoviesCard ({ card, onCardLike, isLiked, classNameButtonLike }) {
+function MoviesCard ({ card, onCardLike, onCardDelete, isLiked, isListCardsSaved }) {
 
   const baseUrlImage = config.baseUrlImage;
 
@@ -12,6 +12,13 @@ function MoviesCard ({ card, onCardLike, isLiked, classNameButtonLike }) {
   )
 
     const handleLikeClick = () => {
+
+      if (isListCardsSaved) {
+        onCardDelete(card);
+      } 
+      else if (isLiked) {
+        onCardDelete(card);
+      } else 
       onCardLike(card); 
       };
 
@@ -35,7 +42,7 @@ function MoviesCard ({ card, onCardLike, isLiked, classNameButtonLike }) {
 
   </div> 
   <button 
-    className={`movies-card__like ${classNameButtonLike} ${isLiked ? 'movies-card__like_isLike' : ''}`}
+    className={`movies-card__btn-like ${isLiked ? 'movies-card__btn-like_isLike' : ''} ${isListCardsSaved ? 'movies-card__btn-like_del' : ''}`}
     type="button" 
     onClick={handleLikeClick}
   >

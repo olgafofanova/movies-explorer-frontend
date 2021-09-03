@@ -4,10 +4,11 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import NotFound from '../NotFound/NotFound';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
-function MoviesCardList ({cards, onCardLike, cardsSaved, isListCardsSaved, onCardDelete }) {
+function MoviesCardList ({ cards, cardsSaved, onCardLike, onCardDelete, isListCardsSaved, isErr  }) {
 
     const currentUser = React.useContext(CurrentUserContext);
 
+    
     return ( 
         <section className="movies-cardlist">   
         <div className="movies-cardlist_card-container">   
@@ -15,17 +16,18 @@ function MoviesCardList ({cards, onCardLike, cardsSaved, isListCardsSaved, onCar
                             return <MoviesCard 
                                     key={card.movieId} 
                                     card={card} 
-                                    onCardLike = {isListCardsSaved ? onCardDelete: onCardLike}  
+                                    onCardLike = {isListCardsSaved ? onCardDelete: onCardLike} 
+                                    onCardDelete = {onCardDelete}  
                                     // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-                                    isLiked = {cardsSaved.some(i => i._id === card.id)}
+                                    isLiked = {cardsSaved.some(i => i.movieId === card.movieId)}
                                     // Изменяем стиль если это кнопка в списке сохраненных карточек
-                                    classNameButtonLike = {isListCardsSaved ? 'movies-card__like_del': ''}
-
+                                    //classNameButtonLike = {isListCardsSaved ? 'movies-card__like_del': ''}
+                                    isListCardsSaved = {isListCardsSaved}
                                 />}
                             ) 
                 } 
             </div>
-            <NotFound  isHidden={ cards.length > 0 }/>
+            <NotFound  isErr={ isErr } />
         </section>
 
     );

@@ -36,9 +36,9 @@
   color: #000000;
 }
 
-.movies-card__like {
-  height: 24px;
-  width: 24px;
+.movies-card__btn-like {
+  height: 14px;
+  width: 14px;
   box-sizing: border-box;
   background-position: top;
   background-repeat: no-repeat;
@@ -49,17 +49,16 @@
 
 }
 
-.movies-card__like:hover {
+.movies-card__btn-like:hover {
   cursor: pointer;
 }
 
-
-.movies-card__like_isLike {
-  /* background-image: url(../../images/save5.svg); */
+.movies-card__btn-like_isLike {
+  background-image: url(../../images/save5.svg);
 }
 
-.movies-card__like_del {
-  /* background-image: url(../../images/d5.svg); */
+.movies-card__btn-like_del {
+  background-image: url(../../images/d5.svg);
 }
 
 .movies-card__duration {

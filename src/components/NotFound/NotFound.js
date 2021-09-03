@@ -1,10 +1,10 @@
 import React from 'react';
 import './NotFound.css';
 
-function NotFound({ isHidden }) {
+function NotFound({ isErr }) {
     return ( 
-      <div className={`notFound  ${ isHidden ? 'notFound_hidden' : ''}`}>
-        Ничего не найдено
+      <div className={`notFound  ${ isErr ? '' : 'notFound_hidden'}`}>
+        { isErr.Message }
       </div>
     );
 }

@@ -26,12 +26,11 @@ function App() {
   const [userEmail, setUserEmail] = useState(null);
   const [userName, setUserName] = useState(null);
   const [isSuccessRegisration, setIsSuccessRegisration] = useState(false);
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState(JSON.parse(localStorage.getItem("cards")) || []);
   const [cardsSaved, setCardsSaved] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [isErr, setIsErr] = useState({isErr:false, Message:''});  
-
 
   const [isErrRegisration, setIsErrRegisration] = useState(false);    
   const [selectedCard, setSelectedCard] = useState(null);
@@ -39,12 +38,16 @@ function App() {
 
   const history = useHistory();
 
+  console.log('localStorage cards -' , JSON.parse(localStorage.getItem("cards")));
+  console.log('cards -' ,cards);
+  console.log('localStorage searchWord -' ,  localStorage.getItem("searchWord"));
+  console.log('cardsSaved-' ,  cardsSaved);
+
   useEffect(() => {
     tokenCheck();
   }, [ ] );
 
   useEffect(() => {
-    console.log('useEffect' , currentUser, loggedIn);
     if (loggedIn) {
       tokenCheck();
       console.log(currentUser);
@@ -71,8 +74,20 @@ function App() {
     moviesApi.getCards()
         .then(res => {
             setCards(formatMovies(filterMovies(res, searchWord)));
+            localStorage.setItem("cards", JSON.stringify(formatMovies(filterMovies(res, searchWord))));
+            localStorage.setItem("searchWord", searchWord);
+            if ((filterMovies(res, searchWord)).length == 0) {
+              setIsErr({
+                isErr:true,
+                Message:'Ничего не найдено',
+              });
+            }
         })
         .catch(err => {
+          setIsErr({
+            isErr:true,
+            Message:'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз',
+          });
             console.log('Ошибка при получении данных', err);
         })
         .finally(()=>{setLoading(false)} );
@@ -80,13 +95,10 @@ function App() {
         console.log(cards)
 } 
 
-function handleCardLike(data) {
-  // Сохранение карточки
-  const movie = {}
-  api.postCard(data)
+function handleCardLike(card) {
+  api.postCard(card)
   .then(newCard => {
-    // ghjdthbnm
-    setCardsSaved([newCard, ...cards]); 
+    setCardsSaved([newCard, ...cardsSaved]); 
     console.log(cardsSaved)    
   })
   .catch(err => {
@@ -96,9 +108,16 @@ function handleCardLike(data) {
 
 function handleCardDelete(card) {
   // Удаление из сохраненных
-  api.deleteCard({ _id: card._id })
+
+  const movieId = card._id
+  ? card._id
+  : cardsSaved.find((item) => {
+      return item.movieId === card.movieId;
+  })._id;
+
+  api.deleteCard({ _id: movieId })
   .then((res) => {
-    setCardsSaved((state) => state.filter((c) => !(c._id === card._id )));
+    setCardsSaved((state) => state.filter((c) => !(c._id === movieId )));
   })
   .catch(err => {
       console.log('Ошибка при получении данных', err);
@@ -112,7 +131,6 @@ function handleCardDelete(card) {
     auth
     .checkToken()
      .then((res) => {
-       console.log(res);
        setLoggedIn(true)
        setCurrentUser(res);
      })
@@ -120,7 +138,6 @@ function handleCardDelete(card) {
      // setLoggedIn(false)
        console.log('Ошибка при получении данных', err);
    }); 
-   console.log('checkToken');
   }; 
 
     //Регистрация
@@ -143,13 +160,10 @@ function handleCardDelete(card) {
       return auth
       .authorize(data)
       .then((res) => {
-        // setUserEmail(data.email);
-        // setUserName(data.name);
-        // localStorage.setItem('jwt', token);
         setLoggedIn(true); 
         localStorage.setItem("loggedIn", true);
         setIsErr({isErr:false, Message:''});
-      //  history.push('/movies');         
+        history.push('/movies');         
       })
       .catch((err) => {
         console.log(err);
@@ -167,8 +181,9 @@ function handleCardDelete(card) {
       .then((res) => {
         setLoggedIn(false);
         setUserEmail(null);  
-        //localStorage.removeItem('jwt');
         localStorage.removeItem("loggedIn");
+        localStorage.removeItem("searchWord");
+        localStorage.removeItem("cards");
         history.push('/'); 
         console.log(res);     
       })
@@ -213,10 +228,16 @@ function handleCardDelete(card) {
           />
         </Route>
           <Route path="/signup">
-            <Register onRegister={onRegister} />
+            <Register 
+              onRegister={onRegister} 
+              isErr={isErr}
+              />
           </Route>
         <Route path="/signin">
-          <Login  onLogin={onLogin} isErr={isErr}/>
+          <Login  
+            onLogin={onLogin} 
+            isErr={isErr}
+            />
         </Route>
 
         <ProtectedRoute 
@@ -226,11 +247,11 @@ function handleCardDelete(card) {
                             onCollMenuClick={handleCollMenuClick}
                             onLogout={onLogout}
                             onEditProfile={handleUpdateProfile}
+                            isErr={isErr}
                         />
 
         <ProtectedRoute 
                             path="/movies" 
-                            // loggedIn={true}
                             component={Movies} 
                             loggedIn= { loggedIn } 
                             onCollMenuClick={handleCollMenuClick}
@@ -239,6 +260,8 @@ function handleCardDelete(card) {
                             onCardLike={handleCardLike} 
                             loading={loading}
                             cardsSaved={cardsSaved}
+                            onCardDelete={handleCardDelete}
+                            isErr={isErr}
                         />
         <ProtectedRoute 
                             component={SavedMovies} 
@@ -247,6 +270,7 @@ function handleCardDelete(card) {
                             onCollMenuClick={handleCollMenuClick}
                             cardsSaved={cardsSaved}
                             onCardDelete={handleCardDelete}
+                            isErr={isErr}
                         />              
 
 

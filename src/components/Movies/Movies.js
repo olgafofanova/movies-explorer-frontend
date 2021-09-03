@@ -8,9 +8,9 @@ import Preloader from '../Preloader/Preloader';
 import More from '../More/More';
 import {filterCheckbox} from '../../utils/filterMovies';
 
-function Movies({loggedIn, onCardsLoadClick, onCollMenuClick, cards, onCardLike, loading, cardsSaved}) {
+function Movies({loggedIn, loading, onCardsLoadClick, onCollMenuClick, cards, cardsSaved, onCardLike, onCardDelete, isErr}) {
 
-  const [isFilterChecked, setIsFilterChecked] = useState(false);
+  const [isFilterChecked, setIsFilterChecked] = useState(true);
   const [countCardsShow, setcountCardsShow,] = useState(5); 
 
   const CardsShow = isFilterChecked ? cards : filterCheckbox(cards);
@@ -27,7 +27,7 @@ function handleFilterCheckbox(event) {
       <>
         <Header onCollMenuClick={onCollMenuClick} loggedIn={loggedIn}/>
         <SearchForm onCardsLoadClick={onCardsLoadClick} onFilterCheckbox={handleFilterCheckbox} isFilterChecked={isFilterChecked}/>
-        {loading ? <Preloader /> :<MoviesCardList cards={CardsShow.slice(0, countCardsShow) } onCardLike={onCardLike} cardsSaved={cardsSaved} />}
+        {loading ? <Preloader /> :<MoviesCardList cards={CardsShow.slice(0, countCardsShow) } onCardLike={onCardLike} onCardDelete={onCardDelete} cardsSaved={cardsSaved} isErr={isErr}/>}
         <More  onClick={handleMoreClick} isHidden={ CardsShow.length < countCardsShow } />
         <Footer />
       </>        
