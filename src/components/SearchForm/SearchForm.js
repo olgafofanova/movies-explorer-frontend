@@ -1,8 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-import icon from '../../images/icon-find.png';
-
 
 function SearchForm({onCardsLoadClick, onFilterCheckbox, isFilterChecked, isListCardsSaved}) {
 

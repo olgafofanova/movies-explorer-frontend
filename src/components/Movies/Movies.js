@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -6,9 +6,9 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 import More from '../More/More';
-import {filterCheckbox} from '../../utils/filterMovies';
+import { filterCheckbox } from '../../utils/filterMovies';
 
-function Movies({loggedIn, loading, onCardsLoadClick, onCollMenuClick, cards, cardsSaved, onCardLike, onCardDelete, isErr}) {
+function Movies({ loggedIn, loading, onCardsLoadClick, onCollMenuClick, cards, cardsSaved, onCardLike, onCardDelete, isErr }) {
 
   const [isFilterChecked, setIsFilterChecked] = useState(true);
   const [countCardsShow, setcountCardsShow,] = useState(5); 

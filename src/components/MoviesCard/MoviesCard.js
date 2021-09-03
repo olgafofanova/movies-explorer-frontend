@@ -1,11 +1,7 @@
 import React from 'react';
 import './MoviesCard.css';
-import img from '../../images/pic.png';
-import { config } from '../../utils/config';
 
 function MoviesCard ({ card, onCardLike, onCardDelete, isLiked, isListCardsSaved }) {
-
-  const baseUrlImage = config.baseUrlImage;
 
   const duration = (
     Math.floor (card.duration / 60) + 'ч ' + (card.duration % 60) + 'м' 

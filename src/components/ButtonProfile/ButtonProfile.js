@@ -1,7 +1,6 @@
 
 import React from 'react';
 import './ButtonProfile.css';
-import icon from '../../images/icon-profile.png';
 
 function ButtonProfile() {
     return ( 

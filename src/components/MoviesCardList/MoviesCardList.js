@@ -2,12 +2,9 @@ import React from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import NotFound from '../NotFound/NotFound';
-import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
 function MoviesCardList ({ cards, cardsSaved, onCardLike, onCardDelete, isListCardsSaved, isErr  }) {
-
-  const currentUser = React.useContext(CurrentUserContext);
-  
+ 
   return ( 
     <section className="movies-cardlist">   
       <div className="movies-cardlist_card-container">   
