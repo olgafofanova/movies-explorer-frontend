@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { Route, Switch, Redirect, withRouter, useHistory } from 'react-router-dom';
-
+import { Route, Switch, useHistory } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import './App.css';
-import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
@@ -22,26 +19,19 @@ import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("loggedIn")) || false);
-
-  const [userEmail, setUserEmail] = useState(null);
-  const [userName, setUserName] = useState(null);
-  const [isSuccessRegisration, setIsSuccessRegisration] = useState(false);
   const [cards, setCards] = useState(JSON.parse(localStorage.getItem("cards")) || []);
   const [cardsSaved, setCardsSaved] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [isErr, setIsErr] = useState({isErr:false, Message:''});  
-
-  const [isErrRegisration, setIsErrRegisration] = useState(false);    
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [isErrReg, setIsErrReg] = useState({isErr:false, Message:''});  
+  const [isErrLog, setIsErrLog] = useState({isErr:false, Message:''});  
+  const [isErrProfil, setIsErrProfil] = useState({isErr:false, Message:''});  
   const [currentUser, setCurrentUser] = useState({});
 
-  const history = useHistory();
+  const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
 
-  console.log('localStorage cards -' , JSON.parse(localStorage.getItem("cards")));
-  console.log('cards -' ,cards);
-  console.log('localStorage searchWord -' ,  localStorage.getItem("searchWord"));
-  console.log('cardsSaved-' ,  cardsSaved);
+  const history = useHistory();
 
   useEffect(() => {
     tokenCheck();
@@ -50,83 +40,79 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       tokenCheck();
-      console.log(currentUser);
-          // первоначальная загрузка сохраненных карточек
-          api.getCards()
-              .then(res => {
-                setCardsSaved(filterOvner(res,currentUser._id))
-                console.log(res);
-                console.log('после фильтрации ',filterOvner(res,currentUser._id));
-              })
-              .catch(err => {
-                  console.log('Ошибка при получении данных', err);
-              });
-
-            //history.push('/main---');
-          }
-        
-}, [loggedIn, currentUser._id]);  
+      // первоначальная загрузка сохраненных карточек
+      api.getCards()
+        .then(res => {
+          setCardsSaved(filterOvner(res,currentUser._id))
+        })
+        .catch(err => {
+          console.log('Ошибка при получении данных', err);
+        });
+    }       
+  }, [loggedIn, currentUser._id]);  
 
   function handleCardsLoad(searchWord) {
     // загрузка карточек по кнопке поиска
-    console.log('нажали кнопку поиска');
     setLoading(true);
     moviesApi.getCards()
-        .then(res => {
-            setCards(formatMovies(filterMovies(res, searchWord)));
-            localStorage.setItem("cards", JSON.stringify(formatMovies(filterMovies(res, searchWord))));
-            localStorage.setItem("searchWord", searchWord);
-            if ((filterMovies(res, searchWord)).length == 0) {
-              setIsErr({
-                isErr:true,
-                Message:'Ничего не найдено',
-              });
-            }
-        })
-        .catch(err => {
+      .then(res => {
+        setCards(formatMovies(filterMovies(res, searchWord)));
+        localStorage.setItem("cards", JSON.stringify(formatMovies(filterMovies(res, searchWord))));
+        localStorage.setItem("searchWord", searchWord);
+        if ((filterMovies(res, searchWord)).length == 0) {
           setIsErr({
             isErr:true,
-            Message:'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз',
+            Message:'Ничего не найдено',
           });
-            console.log('Ошибка при получении данных', err);
-        })
-        .finally(()=>{setLoading(false)} );
-        console.log('закончен поиск');
-        console.log(cards)
-} 
+        }
+      })
+      .catch(err => {
+        setIsErr({
+          isErr:true,
+          Message:'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз',
+        });
+        console.log('Ошибка при получении данных', err);
+      })
+      .finally(()=>{setLoading(false)} );
+  } 
 
-function handleCardLike(card) {
-  api.postCard(card)
-  .then(newCard => {
-    setCardsSaved([newCard, ...cardsSaved]); 
-    console.log(cardsSaved)    
-  })
-  .catch(err => {
-      console.log('Ошибка при получении данных', err);
-  }); 
-} 
+  function handleCardLike(card) {
+    api.postCard(card)
+      .then(newCard => {
+        setCardsSaved([newCard, ...cardsSaved]); 
+        setIsErr({isErr:false, Message:''});  
+      })
+      .catch(err => {
+        setIsErr({
+          isErr:true,
+          Message:'Во время обновления данных произошла ошибка',
+        });
+        console.log('Ошибка при получении данных', err);
+      }); 
+  } 
 
-function handleCardDelete(card) {
+  function handleCardDelete(card) {
   // Удаление из сохраненных
+    const movieId = card._id
+      ? card._id
+      : cardsSaved.find((item) => {
+        return item.movieId === card.movieId;
+      })._id;
 
-  const movieId = card._id
-  ? card._id
-  : cardsSaved.find((item) => {
-      return item.movieId === card.movieId;
-  })._id;
-
-  api.deleteCard({ _id: movieId })
-  .then((res) => {
-    setCardsSaved((state) => state.filter((c) => !(c._id === movieId )));
-  })
-  .catch(err => {
+    api.deleteCard({ _id: movieId })
+    .then((res) => {
+      setCardsSaved((state) => state.filter((c) => !(c._id === movieId )));
+      setIsErr({isErr:false, Message:''});
+    })
+    .catch(err => {
+      setIsErr({
+        isErr:true,
+        Message:'Во время обновления данных произошла ошибка',
+      });
       console.log('Ошибка при получении данных', err);
-  });
-} 
+    });
+  } 
  
-
-
-
   const tokenCheck = () => {     
     auth
     .checkToken()
@@ -135,82 +121,78 @@ function handleCardDelete(card) {
        setCurrentUser(res);
      })
      .catch(err => {
-     // setLoggedIn(false)
        console.log('Ошибка при получении данных', err);
    }); 
   }; 
 
-    //Регистрация
-    const onRegister = (data) => {
-      return auth
-        .register(data)
+  //Регистрация
+  const onRegister = (data) => {
+    return auth
+      .register(data)
         .then(() => {      
-          setUserEmail(data.email);      
-          setIsSuccessRegisration(true);
-          history.push('/signin');
+          onLogin(data);
+          setIsErrReg({isErr:false, Message:''});
         })
-        // .catch((err) => {setIsErrRegisration(true);
-        // });
-                .catch((err) => { console.log(err);
-        });
+      .catch((err) => { 
+        setIsErrReg({
+          isErr:true,
+          Message:'При регистрации пользователя произошла ошибка',
+          });
+        console.log(err);
+      });
   };
 
-    //Авторизация
-    const onLogin = (data) => {
-      return auth
+  //Авторизация
+  const onLogin = (data) => {
+    return auth
       .authorize(data)
-      .then((res) => {
-        setLoggedIn(true); 
-        localStorage.setItem("loggedIn", true);
-        setIsErr({isErr:false, Message:''});
-        history.push('/movies');         
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsErr({
-          isErr:true,
-          Message:'Ошибка авторизации',
+        .then((res) => {
+          setLoggedIn(true); 
+          localStorage.setItem("loggedIn", true);
+          setIsErrLog({isErr:false, Message:''});
+          history.push('/movies');         
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsErrLog({
+            isErr:true,
+            Message:'При авторизации произошла ошибка',
+          });
         });
-      });
-    };
+  };
 
   // Выход
   const onLogout = () => {
     return auth
       .logOut()
-      .then((res) => {
-        setLoggedIn(false);
-        setUserEmail(null);  
-        localStorage.removeItem("loggedIn");
-        localStorage.removeItem("searchWord");
-        localStorage.removeItem("cards");
-        history.push('/'); 
-        console.log(res);     
-      })
-      .catch((err) => {console.log(err);  
-      });
+        .then((res) => {
+          setLoggedIn(false);
+          localStorage.removeItem("loggedIn");
+          localStorage.removeItem("searchWord");
+          localStorage.removeItem("cards");
+          history.push('/');    
+        })
+        .catch((err) => {console.log(err);  
+        });
+  };
 
-    };
-
-    function handleUpdateProfile (data) {   
-      console.log(data);  
-      api.setUserInfo(data)
+  function handleUpdateProfile (data) {    
+    api.setUserInfo(data)
       .then(res => {
-       setCurrentUser(res); 
-       console.log('после сохранения');     
-       console.log(res);   
+        setCurrentUser(res); 
+        setIsErrProfil({isErr:false, Message:''});
       })
       .catch(err => {
-          console.log('Ошибка при получении данных', err);
+        setIsErrProfil({
+          isErr:true,
+          Message:'При обновлении профиля произошла ошибка',
+        });
+        console.log('Ошибка при получении данных', err);
       });
-   };
+  };
 
-
-
-    const [isPopupMenuOpen, setIsPopupMenuOpen] = useState(false);
-
-    function handleCollMenuClick(event) {
-      setIsPopupMenuOpen(true);
+  function handleCollMenuClick(event) {
+    setIsPopupMenuOpen(true);
   };
   
   function closePopupMenu() {
@@ -222,72 +204,63 @@ function handleCardDelete(card) {
       <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
-        <Route exact path="/">
-          <Main loggedIn={loggedIn}
-                                      onCollMenuClick={handleCollMenuClick}
-          />
-        </Route>
+          <Route exact path="/">
+            <Main loggedIn={loggedIn} onCollMenuClick={handleCollMenuClick} />
+          </Route>
           <Route path="/signup">
             <Register 
               onRegister={onRegister} 
-              isErr={isErr}
+              isErr={isErrReg}
               />
           </Route>
-        <Route path="/signin">
-          <Login  
-            onLogin={onLogin} 
+          <Route path="/signin">
+            <Login  
+              onLogin={onLogin} 
+              isErr={isErrLog}
+              />
+          </Route>
+          <ProtectedRoute 
+            path="/profile" 
+            loggedIn={loggedIn} 
+            component={Profile} 
+            onCollMenuClick={handleCollMenuClick}
+            onLogout={onLogout}
+            onEditProfile={handleUpdateProfile}
+            isErr={isErrProfil}
+          />
+          <ProtectedRoute 
+            path="/movies" 
+            component={Movies} 
+            loggedIn= { loggedIn } 
+            onCollMenuClick={handleCollMenuClick}
+            onCardsLoadClick={handleCardsLoad}
+            cards={cards} 
+            onCardLike={handleCardLike} 
+            loading={loading}
+            cardsSaved={cardsSaved}
+            onCardDelete={handleCardDelete}
             isErr={isErr}
-            />
-        </Route>
-
-        <ProtectedRoute 
-                            path="/profile" 
-                            loggedIn={loggedIn} 
-                            component={Profile} 
-                            onCollMenuClick={handleCollMenuClick}
-                            onLogout={onLogout}
-                            onEditProfile={handleUpdateProfile}
-                            isErr={isErr}
-                        />
-
-        <ProtectedRoute 
-                            path="/movies" 
-                            component={Movies} 
-                            loggedIn= { loggedIn } 
-                            onCollMenuClick={handleCollMenuClick}
-                            onCardsLoadClick={handleCardsLoad}
-                            cards={cards} 
-                            onCardLike={handleCardLike} 
-                            loading={loading}
-                            cardsSaved={cardsSaved}
-                            onCardDelete={handleCardDelete}
-                            isErr={isErr}
-                        />
-        <ProtectedRoute 
-                            component={SavedMovies} 
-                            path="/saved-movies" 
-                            loggedIn={ loggedIn }
-                            onCollMenuClick={handleCollMenuClick}
-                            cardsSaved={cardsSaved}
-                            onCardDelete={handleCardDelete}
-                            isErr={isErr}
-                        />              
-
-
-        <Route path="*">
-          <PageNotFound />
-        </Route>
-      </Switch>
-      <PopupMenu 
-                        isOpen={isPopupMenuOpen} 
-                        onClose={closePopupMenu} 
-                    /> 
-
-
-
+          />
+          <ProtectedRoute 
+            component={SavedMovies} 
+            path="/saved-movies" 
+            loggedIn={ loggedIn }
+            onCollMenuClick={handleCollMenuClick}
+            cardsSaved={cardsSaved}
+            onCardDelete={handleCardDelete}
+            isErr={isErr}
+          />              
+          <Route path="*">
+            <PageNotFound />
+          </Route>
+        </Switch>
+        <PopupMenu 
+          isOpen={isPopupMenuOpen} 
+          onClose={closePopupMenu} 
+        /> 
       </CurrentUserContext.Provider>
-    </div> 
-  </div>
+      </div> 
+    </div>
   );
 }
 

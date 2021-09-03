@@ -6,21 +6,17 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
-import PopupMenu from '../PopupMenu/PopupMenu';
 
 function Main({loggedIn, onCollMenuClick}) {
     return ( 
         < >
-        <Promo loggedIn={loggedIn} onCollMenuClick={onCollMenuClick}/>
-         <AboutProject />
-         <Techs />
-         <AboutMe />
-         <Portfolio />
+          <Promo loggedIn={loggedIn} onCollMenuClick={onCollMenuClick}/>
+          <AboutProject />
+          <Techs />
+          <AboutMe />
+          <Portfolio />
           <Footer />
-
-
         </ >
-
     );
 }
 

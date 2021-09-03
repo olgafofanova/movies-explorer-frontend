@@ -7,10 +7,10 @@ function NavTab() {
         <nav>
           <ul className="top-menu">
             <li className="top-menu-item">
-            <NavLink exact to="/movies" activeClassName="top-menu-link_accent" className="top-menu-link">Фильмы</NavLink> 
+              <NavLink exact to="/movies" activeClassName="top-menu-link_accent" className="top-menu-link">Фильмы</NavLink> 
             </li>
             <li className="top-menu-item">
-            <NavLink exact to="/saved-movies" activeClassName="top-menu-link_accent" className="top-menu-link">Сохранённые фильмы</NavLink>
+              <NavLink exact to="/saved-movies" activeClassName="top-menu-link_accent" className="top-menu-link">Сохранённые фильмы</NavLink>
             </li>                   
           </ul>
         </nav> 

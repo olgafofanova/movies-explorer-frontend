@@ -6,8 +6,8 @@ import icon from '../../images/icon-find.png';
 
 function SearchForm({onCardsLoadClick, onFilterCheckbox, isFilterChecked, isListCardsSaved}) {
 
-   const [searchWord, setSearchWord] = useState( !isListCardsSaved ? (localStorage.getItem("searchWord") || '') : '' );  
-   const [err, setErr] = useState( '' ); 
+  const [searchWord, setSearchWord] = useState( !isListCardsSaved ? (localStorage.getItem("searchWord") || '') : '' );  
+  const [err, setErr] = useState( '' ); 
 
   function handleChangeSearchWord(e) {
     setSearchWord(e.target.value);
@@ -24,20 +24,20 @@ function SearchForm({onCardsLoadClick, onFilterCheckbox, isFilterChecked, isList
    }
   } 
 
-    return ( 
+  return ( 
       <section className="search-form">   
         <div className="search-form__container">       
         <form className="search-form__find" onSubmit={handleSubmit}>
             <label className = "search-form__block-input">
                 <input 
-                type="text"       
-                className="search-form__input search-form__input_type_title" 
-                id="search-form__input" 
-                name="name" 
-                placeholder={ !err ? 'фильм':'' } 
-                minLength="1" 
-                onChange={handleChangeSearchWord} 
-                value={searchWord|| ''} 
+                  type="text"       
+                  className="search-form__input search-form__input_type_title" 
+                  id="search-form__input" 
+                  name="name" 
+                  placeholder={ !err ? 'фильм':'' } 
+                  minLength="1" 
+                  onChange={handleChangeSearchWord} 
+                  value={searchWord|| ''} 
                 />
                 <span className="search-form__input-error">{ err|| '' }</span> 
               </label>                
@@ -46,7 +46,7 @@ function SearchForm({onCardsLoadClick, onFilterCheckbox, isFilterChecked, isList
         <FilterCheckbox onFilterCheckbox={onFilterCheckbox} isFilterChecked={isFilterChecked}/>
         </div>
       </section>
-    );
+  );
 }
 
 export default SearchForm;

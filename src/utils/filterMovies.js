@@ -3,20 +3,18 @@ import { config } from './config.js';
 
 export const filterMovies = (cards, searchWord) => {
   return cards.filter( (card) => {
-   // return card.nameRU.includes(searchWord); 
-   return (
-    card.description?.toLowerCase().includes(searchWord.toLowerCase()) ||
-    card.director?.toLowerCase().includes(searchWord.toLowerCase()) ||
-    card.nameEN?.toLowerCase().includes(searchWord.toLowerCase()) ||
-    card.nameRU?.toLowerCase().includes(searchWord.toLowerCase())
-);
+    return (
+      card.description?.toLowerCase().includes(searchWord.toLowerCase()) ||
+      card.director?.toLowerCase().includes(searchWord.toLowerCase()) ||
+      card.nameEN?.toLowerCase().includes(searchWord.toLowerCase()) ||
+      card.nameRU?.toLowerCase().includes(searchWord.toLowerCase())
+    );
   });
 }
 
-
 export const formatMovies = (cards) => {
   return cards.map( (item) => {
-    return    {
+    return {
       country: (item.country ? item.country : ' '), 
       director: (item.director ? item.director : ' '), 
       duration: (item.duration ? item.duration : ' '), 
@@ -28,7 +26,7 @@ export const formatMovies = (cards) => {
       movieId: String(item.id),
       nameRU: (item.nameRU ? item.nameRU : ' '),
       nameEN: (item.nameEN ? item.nameEN : ' '),
-  } ; 
+    }; 
   });
 }
 
@@ -37,9 +35,9 @@ export const filterOvner = (cards, userId) => {
     return card.owner===userId; 
   });
 }
-  export const filterCheckbox = (cards) => {
-    return cards.filter( (card) => {
-      return card.duration < 41; 
-    });
 
+export const filterCheckbox = (cards) => {
+  return cards.filter( (card) => {
+    return card.duration < 41; 
+  });
 };

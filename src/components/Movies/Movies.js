@@ -19,19 +19,19 @@ function Movies({loggedIn, loading, onCardsLoadClick, onCollMenuClick, cards, ca
     setcountCardsShow( countCardsShow + 5 );
   };
 
-function handleFilterCheckbox(event) {
-  setIsFilterChecked(!isFilterChecked);
-};
+  function handleFilterCheckbox(event) {
+    setIsFilterChecked(!isFilterChecked);
+  };
 
-    return ( 
-      <>
-        <Header onCollMenuClick={onCollMenuClick} loggedIn={loggedIn}/>
-        <SearchForm onCardsLoadClick={onCardsLoadClick} onFilterCheckbox={handleFilterCheckbox} isFilterChecked={isFilterChecked}/>
-        {loading ? <Preloader /> :<MoviesCardList cards={CardsShow.slice(0, countCardsShow) } onCardLike={onCardLike} onCardDelete={onCardDelete} cardsSaved={cardsSaved} isErr={isErr}/>}
-        <More  onClick={handleMoreClick} isHidden={ CardsShow.length < countCardsShow } />
-        <Footer />
-      </>        
-    );
+  return ( 
+    <>
+      <Header onCollMenuClick={onCollMenuClick} loggedIn={loggedIn}/>
+      <SearchForm onCardsLoadClick={onCardsLoadClick} onFilterCheckbox={handleFilterCheckbox} isFilterChecked={isFilterChecked}/>
+      {loading ? <Preloader /> :<MoviesCardList cards={CardsShow.slice(0, countCardsShow) } onCardLike={onCardLike} onCardDelete={onCardDelete} cardsSaved={cardsSaved} isErr={isErr}/>}
+      <More  onClick={handleMoreClick} isHidden={ CardsShow.length < countCardsShow } />
+      <Footer />
+    </>        
+  );
 }
 
 export default Movies;

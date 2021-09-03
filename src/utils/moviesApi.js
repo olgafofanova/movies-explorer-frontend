@@ -5,7 +5,6 @@ class Api {
         this.baseUrl = config.baseUrlMovies;
         this.headers = config.headers;
     }
-
     
     _parseResponse(res) {
         if (res.ok) {
@@ -18,19 +17,10 @@ class Api {
         return fetch(`${this.baseUrl}`, {
                 headers: this.headers,
                 method: 'GET',
-                
             })
             .then(res => this._parseResponse(res));
     }
 }
-
-
-// const config = {
-//     baseUrlMovies: 'https://api.nomoreparties.co/beatfilm-movies',
-//     headers: {
-//         'Content-Type': 'application/json',
-//     },
-// };
 
 const moviesApi = new Api(config);
 export default moviesApi;

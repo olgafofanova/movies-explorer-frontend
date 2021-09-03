@@ -13,13 +13,13 @@ function PopupMenu({ onClose, isOpen }) {
             <nav>
               <ul className="popup__menu">
                 <li className="popup__menu-item">
-                <NavLink exact to="/" activeClassName="popup__menu-link_accent" className="popup__menu-link" onClick={onClose}>Главная</NavLink>
+                  <NavLink exact to="/" activeClassName="popup__menu-link_accent" className="popup__menu-link" onClick={onClose}>Главная</NavLink>
                 </li>
                 <li className="popup__menu-item">
-                <NavLink to="/movies" activeClassName="popup__menu-link_accent" className="popup__menu-link" onClick={onClose}>Фильмы</NavLink> 
+                  <NavLink to="/movies" activeClassName="popup__menu-link_accent" className="popup__menu-link" onClick={onClose}>Фильмы</NavLink> 
                 </li>
                 <li className="popup__menu-item">
-                <NavLink to="/saved-movies" activeClassName="popup__menu-link_accent" className="popup__menu-link" onClick={onClose}>Сохранённые фильмы</NavLink>
+                  <NavLink to="/saved-movies" activeClassName="popup__menu-link_accent" className="popup__menu-link" onClick={onClose}>Сохранённые фильмы</NavLink>
                 </li>                   
              </ul>
             </nav> 
