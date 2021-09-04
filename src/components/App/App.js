@@ -59,7 +59,7 @@ function App() {
         setCards(formatMovies(filterMovies(res, searchWord)));
         localStorage.setItem("cards", JSON.stringify(formatMovies(filterMovies(res, searchWord))));
         localStorage.setItem("searchWord", searchWord);
-        if ((filterMovies(res, searchWord)).length == 0) {
+        if ((filterMovies(res, searchWord)).length === 0) {
           setIsErr({
             isErr:true,
             Message:'Ничего не найдено',

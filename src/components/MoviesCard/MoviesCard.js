@@ -18,8 +18,8 @@ function MoviesCard ({ card, onCardLike, onCardDelete, isLiked, isListCardsSaved
 
   return ( 
     <article className="movies-card">
-      <a className="movies-card__trailer-link" href={card.trailerLink} target="_blank">
-        <img className="movies-card__img" src={card.image} />  
+      <a className="movies-card__trailer-link" href={card.trailerLink} target="_blank" rel="noreferrer">
+        <img className="movies-card__img" src={card.image} alt="Постер"/>  
       </a>
       <div className="movies-card__info-container">
         <div className="movies-card__info">

@@ -34,14 +34,17 @@ function Register({ onRegister, isErr }) {
   const blurHandler = (e) => {
     switch (e.target.name) {
       case 'name' :
-        setNameDirty(true)
-        break
+        setNameDirty(true);
+        break;
       case 'email' :
-        setEmailDirty(true)
-        break
+        setEmailDirty(true);
+        break;
       case 'password' :
-        setPasswordDirty(true)
-        break
+        setPasswordDirty(true);
+        break;
+      default:
+          //do nothing;
+          break;
     }
   };
 
@@ -63,7 +66,7 @@ function Register({ onRegister, isErr }) {
         } else {
             setNameError("");
         }
-          break
+          break;
       case 'email' :
         const reg = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
         if (!reg.test(String(e.target.value).toLowerCase())) {
@@ -71,7 +74,7 @@ function Register({ onRegister, isErr }) {
         } else {
             setEmailError('')
         }
-          break
+          break;
       case 'password' :
         if (!e.target.value) {
             setPasswordError("Пароль не может быть пустым");
@@ -82,7 +85,10 @@ function Register({ onRegister, isErr }) {
         } else {
             setPasswordError("");
         }
-          break
+          break;
+      default:
+          //do nothing;
+          break;
     }
   };
 

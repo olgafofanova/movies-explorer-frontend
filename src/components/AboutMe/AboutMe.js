@@ -6,7 +6,7 @@ function AboutMe() {
     return ( 
       <section className="about-me">
         <h2  className="about-me__header">
-          <a name="about-me"></a>
+          <a name="about-me" href="/"> </a>
             Студент
         </h2>
         <div className="about-me__container">  
@@ -22,10 +22,10 @@ function AboutMe() {
             <nav>
               <ul className="about-me__list">
                 <li>
-                  <a className="about-me__link" href="" target="_blank">Facebook</a>
+                  <a className="about-me__link" href="https://ru-ru.facebook.com/" target="_blank" rel="noreferrer">Facebook</a>
                 </li>
                 <li>
-                  <a className="about-me__link" href="" target="_blank">Github</a>
+                  <a className="about-me__link" href="https://github.com/olgafofanova" target="_blank" rel="noreferrer">Github</a>
                 </li>
               </ul>
             </nav>

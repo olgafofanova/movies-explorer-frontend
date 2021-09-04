@@ -31,10 +31,13 @@ function Login({ onLogin, isErr }) {
     switch (e.target.name) {
       case 'email' :
         setEmailDirty(true)
-        break
+        break;
       case 'password' :
         setPasswordDirty(true)
-        break
+        break;
+      default:
+          //do nothing;
+        break;
     }
   };
 
@@ -54,7 +57,7 @@ function Login({ onLogin, isErr }) {
         } else {
             setEmailError('')
         }
-          break
+          break;
       case 'password' :
         if (!e.target.value) {
             setPasswordError("Пароль не может быть пустым");
@@ -65,7 +68,10 @@ function Login({ onLogin, isErr }) {
         } else {
             setPasswordError("");
         }
-          break
+          break;
+        default:
+          //do nothing;
+          break;
     }
   };
 

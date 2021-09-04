@@ -44,7 +44,7 @@ function Profile({loggedIn, onCollMenuClick, onLogout, onEditProfile, isErr}) {
           } else {
               setNameError("");
           }
-            break
+            break;
         case 'email' :
           const reg = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
           if (!reg.test(String(e.target.value).toLowerCase())) {
@@ -52,7 +52,10 @@ function Profile({loggedIn, onCollMenuClick, onLogout, onEditProfile, isErr}) {
           } else {
               setEmailError('')
           }
-            break
+            break;
+        default:
+            //do nothing;
+            break;
       }
     };
   
