@@ -3,7 +3,7 @@ import { config } from './config.js';
 class Api {
     constructor(config) {
         this.baseUrl = config.baseUrlMovies;
-        this.headers = config.headers;
+        this.headers = config.headersMovies;
     }
     
     _parseResponse(res) {

@@ -114,15 +114,29 @@ function App() {
   } 
  
   const tokenCheck = () => {     
+  //   auth
+  //   .checkToken()
+  //    .then((res) => {
+  //      setLoggedIn(true)
+  //      setCurrentUser(res);
+  //    })
+  //    .catch(err => {
+  //      console.log('Ошибка при получении данных', err);
+  //  }); 
+
+    const jwt = localStorage.getItem('jwt');
+    if (!jwt) {
+      return;
+    }    
     auth
-    .checkToken()
-     .then((res) => {
-       setLoggedIn(true)
-       setCurrentUser(res);
-     })
-     .catch(err => {
-       console.log('Ошибка при получении данных', err);
-   }); 
+      .checkToken(jwt)
+      .then((res) => {
+        setLoggedIn(true);
+        setCurrentUser(res);
+      })
+      .catch(err => {
+        console.log('Ошибка при получении данных', err);
+    }); 
   }; 
 
   //Регистрация
@@ -149,6 +163,7 @@ function App() {
         .then((res) => {
           setLoggedIn(true); 
           localStorage.setItem("loggedIn", true);
+          localStorage.setItem("jwt", res.token);
           setIsErrLog({isErr:false, Message:''});
           history.push('/movies');         
         })
@@ -163,17 +178,24 @@ function App() {
 
   // Выход
   const onLogout = () => {
-    return auth
-      .logOut()
-        .then((res) => {
-          setLoggedIn(false);
-          localStorage.removeItem("loggedIn");
-          localStorage.removeItem("searchWord");
-          localStorage.removeItem("cards");
-          history.push('/');    
-        })
-        .catch((err) => {console.log(err);  
-        });
+    setLoggedIn(false);
+    localStorage.removeItem('jwt');
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("searchWord");
+    localStorage.removeItem("cards");
+    history.push('/');  
+
+    // return auth
+    //   .logOut()
+    //     .then((res) => {
+    //       setLoggedIn(false);
+    //       localStorage.removeItem("loggedIn");
+    //       localStorage.removeItem("searchWord");
+    //       localStorage.removeItem("cards");
+    //       history.push('/');    
+    //     })
+    //     .catch((err) => {console.log(err);  
+    //     });
   };
 
   function handleUpdateProfile (data) {    

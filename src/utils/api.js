@@ -18,7 +18,7 @@ class Api {
     postCard(data) {
         return fetch(`${this.baseUrl}/movies`, {
                 method: 'POST',
-                credentials: 'include',
+               // credentials: 'include',
                 headers: this.headers,
                 body: JSON.stringify(
                     data
@@ -31,7 +31,7 @@ class Api {
     deleteCard({ _id }) {
         return fetch(`${this.baseUrl}/movies/${_id}`, {
                 method: 'DELETE',
-                credentials: 'include',
+               // credentials: 'include',
                 headers: this.headers,
             })
             .then(res => this._parseResponse(res));
@@ -40,7 +40,7 @@ class Api {
     setUserInfo(data) {
         return fetch(`${this.baseUrl}/users/me`, {
                 method: 'PATCH',
-                credentials: 'include',
+              //  credentials: 'include',
                 headers: this.headers,
                 body: JSON.stringify(
                     data
@@ -53,7 +53,7 @@ class Api {
         return fetch(`${this.baseUrl}/movies`, {
                 headers: this.headers,
                 method: 'GET',
-                credentials: 'include',
+             //   credentials: 'include',
             })
             .then(res => this._parseResponse(res));
     }
