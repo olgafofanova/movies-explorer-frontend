@@ -58,7 +58,6 @@
   flex-direction: column;
   list-style: none;
   box-sizing: border-box;
-  justify-content: start;
   align-items:center;
 }
 
@@ -88,14 +87,16 @@
 .popup__button-profile {
   text-decoration: none;
   margin: 0 auto;
-}
 
-.popup__button-profile__title {
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
   color: #000000;
+}
+
+.popup__button-profile_accent {
+  border-bottom: 2px solid black;
 }
 
 @media screen and (max-width: 425px) {

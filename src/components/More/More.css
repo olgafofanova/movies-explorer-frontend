@@ -20,6 +20,10 @@
   display: block;
 }
 
+.more__button_hidden {
+display: none;
+}
+
 .more__button:hover {
   cursor: pointer;
 }

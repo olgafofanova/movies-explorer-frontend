@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import './NavTab.css';
 
 function NavTab() {
@@ -6,14 +7,10 @@ function NavTab() {
         <nav>
           <ul className="top-menu">
             <li className="top-menu-item">
-              <a className="top-menu-link top-menu-link_accent" href="/movies" target="_self">
-                Фильмы
-              </a> 
+              <NavLink exact to="/movies" activeClassName="top-menu-link_accent" className="top-menu-link">Фильмы</NavLink> 
             </li>
             <li className="top-menu-item">
-              <a className="top-menu-link" href="/saved-movies" target="_self">
-                Сохранённые фильмы 
-              </a> 
+              <NavLink exact to="/saved-movies" activeClassName="top-menu-link_accent" className="top-menu-link">Сохранённые фильмы</NavLink>
             </li>                   
           </ul>
         </nav> 

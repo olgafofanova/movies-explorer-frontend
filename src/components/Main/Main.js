@@ -7,17 +7,16 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main() {
+function Main({loggedIn, onCollMenuClick}) {
     return ( 
         < >
-        <Promo />
-         <AboutProject />
-         <Techs />
-         <AboutMe />
-         <Portfolio />
-         <Footer />
+          <Promo loggedIn={loggedIn} onCollMenuClick={onCollMenuClick}/>
+          <AboutProject />
+          <Techs />
+          <AboutMe />
+          <Portfolio />
+          <Footer />
         </ >
-
     );
 }
 

@@ -6,7 +6,7 @@ function Techs() {
       <section className="techs">
         <div className="techs_container">
           <h2  className="techs__header">
-            <a name="techs"></a>
+            <a name="techs" href="/"> </a>
               Технологии
           </h2>
           <h3  className="techs__title">

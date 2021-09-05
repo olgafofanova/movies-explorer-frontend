@@ -94,7 +94,12 @@
   border: 0;
   margin: 69px 0 0;
   }
-  
+
+.login__button-submit_inactive {
+  background: #F8F8F8;
+  color: #C2C2C2;
+}
+
 .login__button-submit:hover {
   opacity: 0.8;
   cursor: pointer;
@@ -119,6 +124,20 @@
 .login__input-error {
   color: #FF3055;
   padding-top: 10px;
+}
+
+.login__input-error_hidden {
+  visibility: hidden;
+}
+
+.login__error {
+  color: #FF3055;
+  text-align: center;
+  height: 20px;
+}
+
+.login__error-hidden {
+  visibility: hidden;
 }
 
 @media screen and (max-width: 425px) {

@@ -2,9 +2,9 @@
 import React from 'react';
 import './ButtonCollMemu.css';
 
-function ButtonCollMemu() {
+function ButtonCollMemu({onCollMenuClick}) {
     return ( 
-        <button type="submit" className="button-call-menu"></button>        
+        <button onClick={onCollMenuClick} type="submit" className="button-call-menu"></button>        
     );
 }
 

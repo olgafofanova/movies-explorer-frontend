@@ -1,13 +1,13 @@
 
 import React from 'react';
 import './ButtonProfile.css';
-import icon from '../../images/icon-profile.png';
+import { NavLink } from 'react-router-dom';
 
 function ButtonProfile() {
     return ( 
-        <a  className="button-profile" href="/profile" target="_self">
+        <NavLink exact to="/profile" className="button-profile">
           <p className="button-profile__title">Аккаунт</p>
-        </a> 
+        </NavLink> 
     );
 }
 
