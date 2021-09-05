@@ -19,7 +19,12 @@ class Api {
         return fetch(`${this.baseUrl}/movies`, {
                 method: 'POST',
                // credentials: 'include',
-                headers: this.headers,
+             //   headers: this.headers,
+             headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
                 body: JSON.stringify(
                     data
                 ),
@@ -32,7 +37,12 @@ class Api {
         return fetch(`${this.baseUrl}/movies/${_id}`, {
                 method: 'DELETE',
                // credentials: 'include',
-                headers: this.headers,
+               // headers: this.headers,
+               headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             })
             .then(res => this._parseResponse(res));
     }
@@ -41,7 +51,12 @@ class Api {
         return fetch(`${this.baseUrl}/users/me`, {
                 method: 'PATCH',
               //  credentials: 'include',
-                headers: this.headers,
+               // headers: this.headers,
+               headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
                 body: JSON.stringify(
                     data
                 ),
@@ -51,7 +66,12 @@ class Api {
     
     getCards() {
         return fetch(`${this.baseUrl}/movies`, {
-                headers: this.headers,
+              //  headers: this.headers,
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
                 method: 'GET',
              //   credentials: 'include',
             })

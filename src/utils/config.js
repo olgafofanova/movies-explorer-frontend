@@ -8,6 +8,6 @@ export const config = {
      },  
      headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        //authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },  
  };
